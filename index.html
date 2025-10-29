@@ -1,302 +1,404 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MerryFind — Holiday Gifts & Recipes</title>
-  <style>
-    :root{
-      --bg:#0f1724; --card:#0b1220; --accent:#6ee7b7; --muted:#9aa4b2; --glass: rgba(255,255,255,0.04);
-      --card-radius:18px; --shadow: 0 10px 30px rgba(2,6,23,0.6);
-      --glass-border: rgba(255,255,255,0.06);
-    }
-    *{box-sizing:border-box}
-    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:linear-gradient(180deg,var(--bg),#071026 65%); color:#e6eef6; -webkit-font-smoothing:antialiased}
-    header{backdrop-filter: blur(6px); position:sticky; top:10px; z-index:40; display:flex; align-items:center; gap:16px; padding:12px 20px; margin:12px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); box-shadow:var(--shadow)}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
-    .logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#064e3b,var(--accent)); color:#052f21;font-weight:800}
-    nav{margin-left:auto; display:flex; gap:12px}
-    nav button{background:transparent;border:none;color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer}
-    nav button.active{color:var(--accent); background:linear-gradient(90deg, rgba(110,231,183,0.06), rgba(110,231,183,0.02)); border:1px solid rgba(110,231,183,0.06)}
-    main{padding:28px; max-width:1100px; margin:24px auto}
-    .hero{display:grid; grid-template-columns:1fr 420px; gap:24px; align-items:center}
-    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); border-radius:var(--card-radius); padding:20px; box-shadow:var(--shadow); border:1px solid var(--glass-border)}
-    h1{margin:0 0 8px 0; font-size:28px}
-    p.lead{margin:0;color:var(--muted)}
-    .features{display:flex; gap:12px; margin-top:16px}
-    .feature{flex:1; padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02)}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MerryFind — Holiday Gifts & Recipes</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#6ee7b7; --muted:#9aa4b2; --glass: rgba(255,255,255,0.04);
+      --card-radius:18px; --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --glass-border: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:linear-gradient(180deg,var(--bg),#071026 65%); color:#e6eef6; -webkit-font-smoothing:antialiased}
+    header{backdrop-filter: blur(6px); position:sticky; top:10px; z-index:40; display:flex; align-items:center; gap:16px; padding:12px 20px; margin:12px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); box-shadow:var(--shadow)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#064e3b,var(--accent)); color:#052f21;font-weight:800}
+    nav{margin-left:auto; display:flex; gap:12px}
+    nav button{background:transparent;border:none;color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer; transition:all 0.2s ease-in-out;}
+    nav button:hover{color:var(--accent); background:rgba(110,231,183,0.05);}
+    nav button.active{color:var(--accent); background:linear-gradient(90deg, rgba(110,231,183,0.06), rgba(110,231,183,0.02)); border:1px solid rgba(110,231,183,0.06)}
+    main{padding:28px; max-width:1100px; margin:24px auto}
+    .hero{display:grid; grid-template-columns:1fr 420px; gap:24px; align-items:center}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); border-radius:var(--card-radius); padding:20px; box-shadow:var(--shadow); border:1px solid var(--glass-border); position:relative; overflow:hidden;}
+    h1{margin:0 0 8px 0; font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
+    .features{display:flex; gap:12px; margin-top:16px}
+    .feature{flex:1; padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02); transition:transform 0.2s ease-in-out;}
+    .feature:hover{transform:translateY(-3px);}
 
-    /* grid for pages */
-    section.page{display:none; margin-top:18px}
-    section.page.active{display:block}
+    /* grid for pages */
+    section.page{display:none; margin-top:18px}
+    section.page.active{display:block}
 
-    /* Gifts grid */
-    .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-    .search{flex:1}
-    input[type=text], select{width:100%; padding:10px;border-radius:10px;border:1px solid var(--glass-border); background:transparent;color:inherit}
-    .chips{display:flex; gap:8px; flex-wrap:wrap}
-    .chip{padding:8px 10px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02); cursor:pointer;color:var(--muted)}
-    .chip.active{border-color:var(--accent); color:var(--accent)}
-    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
-    .product{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border:1px solid rgba(255,255,255,0.02); display:flex; gap:12px; align-items:center}
-    .product img{width:84px;height:84px;border-radius:10px; object-fit:cover; flex-shrink:0}
-    .meta{flex:1}
-    .price{font-weight:700}
-    .affiliate{margin-top:8px; display:flex; gap:8px}
-    .btn{padding:8px 12px;border-radius:10px;border:none; cursor:pointer}
-    .btn.primary{background:linear-gradient(90deg,var(--accent), #34d399); color:#032217}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04); color:var(--muted)}
+    /* Gifts grid */
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    .search{flex:1}
+    input[type=text], select{width:100%; padding:10px;border-radius:10px;border:1px solid var(--glass-border); background:transparent;color:inherit}
+    .chips{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{padding:8px 10px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02); cursor:pointer;color:var(--muted); transition:all 0.2s ease-in-out;}
+    .chip:hover{border-color:var(--accent); color:var(--accent);}
+    .chip.active{border-color:var(--accent); color:var(--accent); background:rgba(110,231,183,0.08);}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .product{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border:1px solid rgba(255,255,255,0.02); display:flex; gap:12px; align-items:center; transition:transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;}
+    .product:hover{transform:translateY(-4px) scale(1.01); box-shadow:var(--shadow); } /* Product hover effect */
+    .product img{width:84px;height:84px;border-radius:10px; object-fit:cover; flex-shrink:0}
+    .meta{flex:1}
+    .price{font-weight:700}
+    .affiliate{margin-top:8px; display:flex; gap:8px}
+    .btn{padding:8px 12px;border-radius:10px;border:none; cursor:pointer; transition:all 0.2s ease-in-out;}
+    .btn.primary{background:linear-gradient(90deg,var(--accent), #34d399); color:#032217;}
+    .btn.primary:hover{opacity:0.9; transform:translateY(-1px);}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04); color:var(--muted);}
+    .btn.ghost:hover{border-color:var(--accent); color:var(--accent);}
 
-    /* Wishes */
-    .wish-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
-    .wish-card{padding:14px;border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
 
-    /* Recipes */
-    .ingredients{display:flex; gap:12px; flex-wrap:wrap}
-    .ingredient{padding:8px 10px;border-radius:999px;border:1px solid var(--glass-border); cursor:pointer}
-    .ingredient.active{background:rgba(110,231,183,0.08); border-color:var(--accent)}
-    .recipe-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
-    .recipe{padding:12px;border-radius:12px}
-    .match-good{border-left:4px solid #10b981;padding-left:10px}
-    .match-miss{border-left:4px solid #f59e0b;padding-left:10px}
+    /* Wishes */
+    .wish-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .wish-card{padding:14px;border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02); transition:transform 0.2s ease-in-out;}
+    .wish-card:hover{transform:translateY(-2px);}
 
-    /* Discountable */
-    .discount-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
-    .discount{padding:12px;border-radius:12px}
-    .badge{font-weight:700;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.03)}
 
-    /* footer */
-    footer{margin-top:28px; text-align:center; color:var(--muted); padding:20px}
+    /* Recipes */
+    .ingredients{display:flex; gap:12px; flex-wrap:wrap}
+    .ingredient{padding:8px 10px;border-radius:999px;border:1px solid var(--glass-border); cursor:pointer; transition:all 0.2s ease-in-out;}
+    .ingredient:hover{border-color:var(--accent); color:var(--accent);}
+    .ingredient.active{background:rgba(110,231,183,0.08); border-color:var(--accent);}
+    .recipe-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .recipe{padding:12px;border-radius:12px; transition:transform 0.3s ease-out, opacity 0.3s ease-out;} /* Recipe entry animation */
+    .match-good{border-left:4px solid #10b981;padding-left:10px; background:rgba(16,185,129,0.05);}
+    .match-miss{border-left:4px solid #f59e0b;padding-left:10px; background:rgba(245,158,11,0.05);}
 
-    /* small screens */
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .grid, .discount-grid{grid-template-columns:repeat(2,1fr)}
-      .recipe-list{grid-template-columns:1fr}
-    }
-    @media (max-width:600px){
-      .grid{grid-template-columns:1fr}
-    }
+    /* Discountable */
+    .discount-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .discount{padding:12px;border-radius:12px; position:relative; overflow:hidden; border:1px solid var(--glass-border); background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); transition:transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;}
+    .discount:hover{transform:translateY(-4px); box-shadow:var(--shadow);}
+    .discount .badge{font-weight:700;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.03); color:var(--accent); border:1px solid rgba(110,231,183,0.1);} /* Make badge stand out */
 
-    /* subtle entrance animation */
-    .fade-in{opacity:0; transform:translateY(8px); animation:fadeIn .6s forwards}
-    @keyframes fadeIn{to{opacity:1; transform:none}}
-  </style>
+    /* Hero image */
+    .hero-image-container{
+      position: relative;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      padding: 0;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--glass-border);
+    }
+    .hero-image-container img{
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--card-radius);
+      transition: transform 0.5s ease-in-out;
+    }
+    .hero-image-container img:hover{
+      transform: scale(1.03);
+    }
+
+    /* Shine effect for discount cards */
+    .discount::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      transform: skewX(-20deg);
+      transition: transform 0.5s ease-in-out;
+    }
+    .discount:hover::before {
+      transform: skewX(-20deg) translateX(160%);
+    }
+
+
+    /* footer */
+    footer{margin-top:28px; text-align:center; color:var(--muted); padding:20px}
+
+    /* small screens */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .grid, .discount-grid{grid-template-columns:repeat(2,1fr)}
+      .recipe-list{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .grid{grid-template-columns:1fr}
+      .wish-list{grid-template-columns:1fr} /* Added for small screen wish list */
+    }
+
+    /* subtle entrance animation */
+    .fade-in{opacity:0; transform:translateY(8px); animation:fadeIn .6s forwards}
+    @keyframes fadeIn{to{opacity:1; transform:none}}
+
+    /* Recipe card entry animation */
+    .recipe.fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.4s ease-out forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="fade-in">
-    <div class="brand">
-      <div class="logo">MF</div>
-      <div>
-        <div style="font-size:14px">MerryFind</div>
-        <div style="font-size:11px;color:var(--muted)">Holiday gifts & recipes</div>
-      </div>
-    </div>
-    <nav>
-      <button class="nav-btn active" data-target="home">Home</button>
-      <button class="nav-btn" data-target="gifts">Gifts</button>
-      <button class="nav-btn" data-target="wishes">Wishes</button>
-      <button class="nav-btn" data-target="recipes">Recipes</button>
-      <button class="nav-btn" data-target="discounts">Discounts</button>
-    </nav>
-  </header>
+  <header class="fade-in">
+    <div class="brand">
+      <div class="logo">MF</div>
+      <div>
+        <div style="font-size:14px">MerryFind</div>
+        <div style="font-size:11px;color:var(--muted)">Holiday gifts & recipes</div>
+      </div>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-target="home">Home</button>
+      <button class="nav-btn" data-target="gifts">Gifts</button>
+      <button class="nav-btn" data-target="wishes">Wishes</button>
+      <button class="nav-btn" data-target="recipes">Recipes</button>
+      <button class="nav-btn" data-target="discounts">Discounts</button>
+    </nav>
+  </header>
 
-  <main>
-    <section id="home" class="page active">
-      <div class="hero card">
-        <div>
-          <h1>Find perfect holiday gifts, wishes & recipes — beautifully.</h1>
-          <p class="lead">A lightweight site concept with filtering, affiliate-ready gift lists, personalized wishes, recipe matching and a discount radar. Built with clean interactions and subtle animations.</p>
-          <div class="features">
-            <div class="feature">
-              <strong>Top 20 Gifts</strong>
-              <div style="font-size:13px;color:var(--muted)">Curated & affiliate-ready — filter by categories.</div>
-            </div>
-            <div class="feature">
-              <strong>Wishes & Messages</strong>
-              <div style="font-size:13px;color:var(--muted)">One-click copy messages for family & friends.</div>
-            </div>
-            <div class="feature">
-              <strong>Recipe Matcher</strong>
-              <div style="font-size:13px;color:var(--muted)">Check ingredients you have — see which recipes you can make.</div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="card" style="text-align:center">
-            <h3 style="margin:4px 0 8px 0">Quick actions</h3>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <button class="btn primary" onclick="goTo('gifts')">Browse Gifts</button>
-              <button class="btn ghost" onclick="goTo('recipes')">Try Recipe Matcher</button>
-              <button class="btn ghost" onclick="goTo('wishes')">Get Wishes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <main>
+    <section id="home" class="page active">
+      <div class="hero card">
+        <div>
+          <h1>Find perfect holiday gifts, wishes & recipes — beautifully.</h1>
+          <p class="lead">A lightweight site concept with filtering, affiliate-ready gift lists, personalized wishes, recipe matching and a discount radar. Built with clean interactions and subtle animations.</p>
+          <div class="features">
+            <div class="feature">
+              <strong>Top 20 Gifts</strong>
+              <div style="font-size:13px;color:var(--muted)">Curated & affiliate-ready — filter by categories.</div>
+            </div>
+            <div class="feature">
+              <strong>Wishes & Messages</strong>
+              <div style="font-size:13px;color:var(--muted)">One-click copy messages for family & friends.</div>
+            </div>
+            <div class="feature">
+              <strong>Recipe Matcher</strong>
+              <div style="font-size:13px;color:var(--muted)">Check ingredients you have — see which recipes you can make.</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image-container">
+          <img src="https://images.unsplash.com/photo-1513297800055-359f1092e071?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzFHxlZWR8MXwxfHx8fHwxfHwxNzA3MDY5MzQ2&ixlib=rb-4.0.3&q=80&w=1080" alt="Festive holiday scene with gifts and decorations" />
+        </div>
+      </div>
+      <div class="card" style="margin-top:24px; text-align:center">
+        <h3 style="margin:4px 0 8px 0">Quick actions</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn primary" onclick="goTo('gifts')">Browse Gifts</button>
+          <button class="btn ghost" onclick="goTo('recipes')">Try Recipe Matcher</button>
+          <button class="btn ghost" onclick="goTo('wishes')">Get Wishes</button>
+        </div>
+      </div>
+    </section>
 
-    <section id="gifts" class="page">
-      <div class="card">
-        <div class="controls">
-          <div class="search"><input type="text" id="gift-search" placeholder="Search gifts, e.g. 'headphones'" /></div>
-          <div style="width:220px"><select id="sort-gifts"><option value="popular">Sort: Popular</option><option value="price-asc">Price: Low→High</option><option value="price-desc">Price: High→Low</option></select></div>
-        </div>
-        <div style="margin:12px 0" class="chips" id="gift-categories"></div>
-        <div class="grid" id="gift-grid"></div>
-      </div>
-    </section>
+    <section id="gifts" class="page">
+      <div class="card">
+        <div class="controls">
+          <div class="search"><input type="text" id="gift-search" placeholder="Search gifts, e.g. 'headphones'" /></div>
+          <div style="width:220px"><select id="sort-gifts"><option value="popular">Sort: Popular</option><option value="price-asc">Price: Low→High</option><option value="price-desc">Price: High→Low</option></select></div>
+        </div>
+        <div style="margin:12px 0" class="chips" id="gift-categories"></div>
+        <div class="grid" id="gift-grid"></div>
+      </div>
+    </section>
 
-    <section id="wishes" class="page">
-      <div class="card">
-        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px">
-          <div style="font-weight:700">Select recipient:</div>
-          <div class="chips" id="wish-cats"></div>
-        </div>
-        <div class="wish-list" id="wish-list"></div>
-      </div>
-    </section>
+    <section id="wishes" class="page">
+      <div class="card">
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px">
+          <div style="font-weight:700">Select recipient:</div>
+          <div class="chips" id="wish-cats"></div>
+        </div>
+        <div class="wish-list" id="wish-list"></div>
+      </div>
+    </section>
 
-    <section id="recipes" class="page">
-      <div class="card">
-        <h3>Recipe Matcher</h3>
-        <p class="lead">Tick the ingredients you have — we'll show recipes you can make or come close to.</p>
-        <div style="margin:12px 0" id="ingredient-panel" class="ingredients"></div>
-        <div style="margin-top:12px" class="recipe-list" id="recipe-list"></div>
-      </div>
-    </section>
+    <section id="recipes" class="page">
+      <div class="card">
+        <h3>Recipe Matcher</h3>
+        <p class="lead">Tick the ingredients you have — we'll show recipes you can make or come close to.</p>
+        <div style="margin:12px 0" id="ingredient-panel" class="ingredients"></div>
+        <div style="margin-top:12px" class="recipe-list" id="recipe-list"></div>
+      </div>
+    </section>
 
-    <section id="discounts" class="page">
-      <div class="card">
-        <h3>Discountable & Valuable Finds</h3>
-        <p class="lead">Items with high value and big current discounts — good for holiday shopping.</p>
-        <div style="margin-top:12px" class="discount-grid" id="discount-grid"></div>
-      </div>
-    </section>
+    <section id="discounts" class="page">
+      <div class="card">
+        <h3>Discountable & Valuable Finds</h3>
+        <p class="lead">Items with high value and big current discounts — good for holiday shopping.</p>
+        <div style="margin-top:12px" class="discount-grid" id="discount-grid"></div>
+      </div>
+    </section>
 
-    <footer>
-      Built with ❤️ — prototype UI. Replace affiliate placeholders with your affiliate links.
-    </footer>
-  </main>
+    <footer>
+      Built with ❤️ — prototype UI. Replace affiliate placeholders with your affiliate links.
+    </footer>
+  </main>
 
-  <script>
-    /* ---------- Sample data ---------- */
-    const gifts = [
-      {id:1,title:'Cozy Wool Scarf',cat:'clothing',price:29, img:'https://images.unsplash.com/photo-1542060748-86f48b2c0a2b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=1',pop:90},
-      {id:2,title:'Bluetooth Headphones',cat:'electronics',price:89,img:'https://images.unsplash.com/photo-1518444024645-7f5c4c7c3f6d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=2',pop:120},
-      {id:3,title:'Hand-painted Ornament Set',cat:'decoration',price:19,img:'https://images.unsplash.com/photo-1549187774-b4e9b0445b6d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=3',pop:70},
-      {id:4,title:'Retro Game Console',cat:'gaming',price:129,img:'https://images.unsplash.com/photo-1606813903254-535a3b5c9e1d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=4',pop:110},
-      {id:5,title:'Guitar Starter Pack',cat:'music',price:149,img:'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=5',pop:95},
-      {id:6,title:'Festive Candle Trio',cat:'home',price:24,img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&q=60&w=400',aff:'https://example.com/aff?item=6',pop:65},
-      {id:7,title:'Leather Wallet',cat:'accessories',price:39,img:'https://images.unsplash.com/photo-1520975914675-6fedd9b9a1b9?auto=format&q=60&w=400',aff:'https://example.com/aff?item=7',pop:88},
-      {id:8,title:'Kids Plush Toy',cat:'toys',price:22,img:'https://images.unsplash.com/photo-1543785734-4e7a7f5b5b2b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=8',pop:140},
-      {id:9,title:'Custom Photo Frame',cat:'decoration',price:34,img:'https://images.unsplash.com/photo-1505691723518-36a94f1f0b6b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=9',pop:50},
-      {id:10,title:'Warm Winter Boots',cat:'shoes',price:99,img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&q=60&w=400',aff:'https://example.com/aff?item=10',pop:105},
-      {id:11,title:'Novel Bestseller',cat:'books',price:16,img:'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&q=60&w=400',aff:'https://example.com/aff?item=11',pop:47},
-      {id:12,title:'Coffee Gift Set',cat:'food',price:46,img:'https://images.unsplash.com/photo-1485459726513-55c8bd6f7b3b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=12',pop:96},
-      {id:13,title:'Fitness Tracker',cat:'electronics',price:79,img:'https://images.unsplash.com/photo-1519861531924-1e3b1d3af5f6?auto=format&q=60&w=400',aff:'https://example.com/aff?item=13',pop:101},
-      {id:14,title:'Christmas Sweater',cat:'clothing',price:34,img:'https://images.unsplash.com/photo-1542407762-9e9f1b7b34d4?auto=format&q=60&w=400',aff:'https://example.com/aff?item=14',pop:84},
-      {id:15,title:'Cap & Beanie Combo',cat:'accessories',price:26,img:'https://images.unsplash.com/photo-1519741491850-17c3e7c8b9c1?auto=format&q=60&w=400',aff:'https://example.com/aff?item=15',pop:60},
-      {id:16,title:'Board Game Classic',cat:'gaming',price:49,img:'https://images.unsplash.com/photo-1527920341687-3a2b6ae7b3b2?auto=format&q=60&w=400',aff:'https://example.com/aff?item=16',pop:130},
-      {id:17,title:'Kitchen Mixer',cat:'home',price:199,img:'https://images.unsplash.com/photo-1541534401786-6c2b0fda6cbc?auto=format&q=60&w=400',aff:'https://example.com/aff?item=17',pop:55},
-      {id:18,title:'Smart Light Kit',cat:'electronics',price:59,img:'https://images.unsplash.com/photo-1496180727794-817822f65950?auto=format&q=60&w=400',aff:'https://example.com/aff?item=18',pop:99},
-      {id:19,title:'Scented Diffuser',cat:'home',price:33,img:'https://images.unsplash.com/photo-1496284045406-d5c76b1f0f0d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=19',pop:48},
-      {id:20,title:'Stainless Travel Mug',cat:'accessories',price:21,img:'https://images.unsplash.com/photo-1517685352821-92cf88aee5a5?auto=format&q=60&w=400',aff:'https://example.com/aff?item=20',pop:76}
-    ];
+  <script>
+    /* ---------- Sample data ---------- */
+    const gifts = [
+      {id:1,title:'Cozy Wool Scarf',cat:'clothing',price:29, img:'https://images.unsplash.com/photo-1542060748-86f48b2c0a2b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=1',pop:90},
+      {id:2,title:'Bluetooth Headphones',cat:'electronics',price:89,img:'https://images.unsplash.com/photo-1518444024645-7f5c4c7c3f6d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=2',pop:120},
+      {id:3,title:'Hand-painted Ornament Set',cat:'decoration',price:19,img:'https://images.unsplash.com/photo-1549187774-b4e9b0445b6d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=3',pop:70},
+      {id:4,title:'Retro Game Console',cat:'gaming',price:129,img:'https://images.unsplash.com/photo-1606813903254-535a3b5c9e1d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=4',pop:110},
+      {id:5,title:'Guitar Starter Pack',cat:'music',price:149,img:'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=5',pop:95},
+      {id:6,title:'Festive Candle Trio',cat:'home',price:24,img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&q=60&w=400',aff:'https://example.com/aff?item=6',pop:65},
+      {id:7,title:'Leather Wallet',cat:'accessories',price:39,img:'https://images.unsplash.com/photo-1520975914675-6fedd9b9a1b9?auto=format&q=60&w=400',aff:'https://example.com/aff?item=7',pop:88},
+      {id:8,title:'Kids Plush Toy',cat:'toys',price:22,img:'https://images.unsplash.com/photo-1543785734-4e7a7f5b5b2b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=8',pop:140},
+      {id:9,title:'Custom Photo Frame',cat:'decoration',price:34,img:'https://images.unsplash.com/photo-1505691723518-36a94f1f0b6b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=9',pop:50},
+      {id:10,title:'Warm Winter Boots',cat:'shoes',price:99,img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&q=60&w=400',aff:'https://example.com/aff?item=10',pop:105},
+      {id:11,title:'Novel Bestseller',cat:'books',price:16,img:'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&q=60&w=400',aff:'https://example.com/aff?item=11',pop:47},
+      {id:12,title:'Coffee Gift Set',cat:'food',price:46,img:'https://images.unsplash.com/photo-1485459726513-55c8bd6f7b3b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=12',pop:96},
+      {id:13,title:'Fitness Tracker',cat:'electronics',price:79,img:'https://images.unsplash.com/photo-1519861531924-1e3b1d3af5f6?auto=format&q=60&w=400',aff:'https://example.com/aff?item=13',pop:101},
+      {id:14,title:'Christmas Sweater',cat:'clothing',price:34,img:'https://images.unsplash.com/photo-1542407762-9e9f1b7b34d4?auto=format&q=60&w=400',aff:'https://example.com/aff?item=14',pop:84},
+      {id:15,title:'Cap & Beanie Combo',cat:'accessories',price:26,img:'https://images.unsplash.com/photo-1519741491850-17c3e7c8b9c1?auto=format&q=60&w=400',aff:'https://example.com/aff?item=15',pop:60},
+      {id:16,title:'Board Game Classic',cat:'gaming',price:49,img:'https://images.unsplash.com/photo-1527920341687-3a2b6ae7b3b2?auto=format&q=60&w=400',aff:'https://example.com/aff?item=16',pop:130},
+      {id:17,title:'Kitchen Mixer',cat:'home',price:199,img:'https://images.unsplash.com/photo-1541534401786-6c2b0fda6cbc?auto=format&q=60&w=400',aff:'https://example.com/aff?item=17',pop:55},
+      {id:18,title:'Smart Light Kit',cat:'electronics',price:59,img:'https://images.unsplash.com/photo-1496180727794-817822f65950?auto=format&q=60&w=400',aff:'https://example.com/aff?item=18',pop:99},
+      {id:19,title:'Scented Diffuser',cat:'home',price:33,img:'https://images.unsplash.com/photo-1496284045406-d5c76b1f0f0d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=19',pop:48},
+      {id:20,title:'Stainless Travel Mug',cat:'accessories',price:21,img:'https://images.unsplash.com/photo-1517685352821-92cf88aee5a5?auto=format&q=60&w=400',aff:'https://example.com/aff?item=20',pop:76}
+    ];
 
-    const wishData = {
-      mom:["Mom, your love is my comfort — Merry Christmas!","Wishing you a cozy holiday filled with warm hugs and cocoa."],
-      dad:["Dad, thanks for being my rock. Merry Christmas!","May your holiday be peaceful and joyful."] ,
-      brother:["Bro — let's make this Christmas legendary!","To my brother, teammate, friend — happy holidays."] ,
-      sister:["Sis, your smile lights the season. Merry Christmas!","May your season sparkle as you do."] ,
-      friend:["So glad to have you this year — happy holidays!","Wishing you laughter, warmth and great memories."]
-    };
+    const wishData = {
+      mom:["Mom, your love is my comfort — Merry Christmas!","Wishing you a cozy holiday filled with warm hugs and cocoa."],
+      dad:["Dad, thanks for being my rock. Merry Christmas!","May your holiday be peaceful and joyful."] ,
+      brother:["Bro — let's make this Christmas legendary!","To my brother, teammate, friend — happy holidays."] ,
+      sister:["Sis, your smile lights the season. Merry Christmas!","May your season sparkle as you do."] ,
+      friend:["So glad to have you this year — happy holidays!","Wishing you laughter, warmth and great memories."]
+    };
 
-    const ingredients = ['flour','sugar','butter','eggs','milk','chicken','potato','cinnamon','ginger','garlic','onion','cheese','tomato','basil'];
+    const ingredients = ['flour','sugar','butter','eggs','milk','chicken','potato','cinnamon','ginger','garlic','onion','cheese','tomato','basil'];
 
-    const recipes = [
-      {id:'r1',title:'Classic Gingerbread Cookies',ing:['flour','sugar','butter','eggs','cinnamon','ginger']},
-      {id:'r2',title:'Roast Chicken with Herbs',ing:['chicken','garlic','onion','butter']},
-      {id:'r3',title:'Creamy Mashed Potato',ing:['potato','butter','milk']},
-      {id:'r4',title:'Tomato Basil Pasta',ing:['tomato','basil','garlic','cheese']},
-      {id:'r5',title:'Christmas Custard',ing:['milk','eggs','sugar']}
-    ];
+    const recipes = [
+      {id:'r1',title:'Classic Gingerbread Cookies',ing:['flour','sugar','butter','eggs','cinnamon','ginger']},
+      {id:'r2',title:'Roast Chicken with Herbs',ing:['chicken','garlic','onion','butter']},
+      {id:'r3',title:'Creamy Mashed Potato',ing:['potato','butter','milk']},
+      {id:'r4',title:'Tomato Basil Pasta',ing:['tomato','basil','garlic','cheese']},
+      {id:'r5',title:'Christmas Custard',ing:['milk','eggs','sugar']}
+    ];
 
-    const discounts = [
-      {id:4, title:'Retro Game Console', price:129, discount:25, tag:'gaming'},
-      {id:17, title:'Kitchen Mixer', price:199, discount:30, tag:'home'},
-      {id:2, title:'Bluetooth Headphones', price:89, discount:15, tag:'electronics'},
-      {id:10, title:'Warm Winter Boots', price:99, discount:40, tag:'clothing'},
-      {id:5, title:'Guitar Starter Pack', price:149, discount:20, tag:'music'},
-      {id:16, title:'Board Game Classic', price:49, discount:10, tag:'gaming'}
-    ];
+    const discounts = [
+      {id:4, title:'Retro Game Console', price:129, discount:25, tag:'gaming'},
+      {id:17, title:'Kitchen Mixer', price:199, discount:30, tag:'home'},
+      {id:2, title:'Bluetooth Headphones', price:89, discount:15, tag:'electronics'},
+      {id:10, title:'Warm Winter Boots', price:99, discount:40, tag:'clothing'},
+      {id:5, title:'Guitar Starter Pack', price:149, discount:20, tag:'music'},
+      {id:16, title:'Board Game Classic', price:49, discount:10, tag:'gaming'}
+    ];
 
-    /* ---------- UI wiring ---------- */
-    const categories = Array.from(new Set(gifts.map(g=>g.cat)));
+    /* ---------- UI wiring ---------- */
+    const categories = Array.from(new Set(gifts.map(g=>g.cat)));
 
-    function $(s){return document.querySelector(s)}
-    function $all(s){return Array.from(document.querySelectorAll(s))}
+    function $(s){return document.querySelector(s)}
+    function $all(s){return Array.from(document.querySelectorAll(s))}
 
-    function buildCategoryChips(){
-      const wrap = $('#gift-categories'); wrap.innerHTML='';
-      ['all', ...categories].forEach(c=>{
-        const but = document.createElement('div'); but.className='chip'+(c==='all'?' active':''); but.textContent=c; but.dataset.cat=c; but.onclick=()=>{ $all('.chip').forEach(x=>x.classList.remove('active')); but.classList.add('active'); renderGifts(); }
-        wrap.appendChild(but);
-      })
-    }
+    function buildCategoryChips(){
+      const wrap = $('#gift-categories'); wrap.innerHTML='';
+      ['all', ...categories].forEach(c=>{
+        const but = document.createElement('div'); but.className='chip'+(c==='all'?' active':''); but.textContent=c; but.dataset.cat=c; but.onclick=()=>{ $all('.chip').forEach(x=>x.classList.remove('active')); but.classList.add('active'); renderGifts(); }
+        wrap.appendChild(but);
+      })
+    }
 
-    function renderGifts(){
-      const grid = $('#gift-grid'); grid.innerHTML='';
-      const q = $('#gift-search').value.toLowerCase();
-      const activeCat = $all('#gift-categories .chip').find(c=>c.classList.contains('active')).dataset.cat;
-      let list = gifts.filter(g=> (activeCat==='all' || g.cat===activeCat) && (g.title.toLowerCase().includes(q) || g.cat.includes(q)) );
-      const sort = $('#sort-gifts').value;
-      if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);
-      if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);
-      if(sort==='popular') list.sort((a,b)=>b.pop-b.pop);
-      list.forEach(item=>{
-        const el = document.createElement('div'); el.className='product fade-in';
-        el.innerHTML = `<img src="${item.img}" alt="${item.title}"><div class="meta"><div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${item.title}</strong><div style="font-size:12px;color:var(--muted)">Category: ${item.cat}</div></div><div style="text-align:right"><div class="price">$${item.price}</div><div style="font-size:12px;color:var(--muted)">pop ${item.pop}</div></div></div><div class="affiliate"><a class="btn primary" href="${item.aff}" target="_blank" rel="noopener">Buy (affiliate)</a><button class="btn ghost" onclick="copyLink('${item.aff}')">Copy Link</button></div></div>`;
-        grid.appendChild(el);
-      })
-    }
+    function renderGifts(){
+      const grid = $('#gift-grid'); grid.innerHTML='';
+      const q = $('#gift-search').value.toLowerCase();
+      const activeCat = $all('#gift-categories .chip').find(c=>c.classList.contains('active')).dataset.cat;
+      let list = gifts.filter(g=> (activeCat==='all' || g.cat===activeCat) && (g.title.toLowerCase().includes(q) || g.cat.includes(q)) );
+      const sort = $('#sort-gifts').value;
+      if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);
+      if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);
+      if(sort==='popular') list.sort((a,b)=>b.pop-a.pop); // Corrected sorting for popularity
+      list.forEach((item, index)=>{
+        const el = document.createElement('div'); el.className='product fade-in';
+        el.style.animationDelay = `${index * 0.05}s`; // Staggered animation for gifts
+        el.innerHTML = `<img src="${item.img}" alt="${item.title}"><div class="meta"><div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${item.title}</strong><div style="font-size:12px;color:var(--muted)">Category: ${item.cat}</div></div><div style="text-align:right"><div class="price">$${item.price}</div><div style="font-size:12px;color:var(--muted)">pop ${item.pop}</div></div></div><div class="affiliate"><a class="btn primary" href="${item.aff}" target="_blank" rel="noopener">Buy (affiliate)</a><button class="btn ghost" onclick="copyLink('${item.aff}')">Copy Link</button></div></div>`;
+        grid.appendChild(el);
+      })
+    }
 
-    function copyLink(url){navigator.clipboard.writeText(url).then(()=>alert('Affiliate link copied to clipboard'))}
+    function copyLink(url){navigator.clipboard.writeText(url).then(()=>alert('Affiliate link copied to clipboard'))}
 
-    function buildWishes(){
-      const wrap = $('#wish-cats'); wrap.innerHTML='';
-      Object.keys(wishData).forEach(k=>{ const c = document.createElement('div'); c.className='chip'+(k==='mom'?' active':''); c.textContent=k; c.onclick=()=>{ $all('#wish-cats .chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); renderWishes(k) }; wrap.appendChild(c)})
-      renderWishes('mom');
-    }
+    function buildWishes(){
+      const wrap = $('#wish-cats'); wrap.innerHTML='';
+      Object.keys(wishData).forEach(k=>{ const c = document.createElement('div'); c.className='chip'+(k==='mom'?' active':''); c.textContent=k; c.onclick=()=>{ $all('#wish-cats .chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); renderWishes(k) }; wrap.appendChild(c)})
+      renderWishes('mom');
+    }
 
-    function renderWishes(key){ const list = $('#wish-list'); list.innerHTML=''; wishData[key].forEach(w=>{ const el = document.createElement('div'); el.className='wish-card fade-in'; el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><strong>${capitalize(key)}</strong><p style="color:var(--muted)">${w}</p></div><div><button class="btn primary" onclick="copyText('${escapeForJs(w)}')">Copy</button></div></div>`; list.appendChild(el) }) }
+    function renderWishes(key){ const list = $('#wish-list'); list.innerHTML=''; wishData[key].forEach((w, index)=>{ const el = document.createElement('div'); el.className='wish-card fade-in'; el.style.animationDelay = `${index * 0.05}s`; el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><strong>${capitalize(key)}</strong><p style="color:var(--muted)">${w}</p></div><div><button class="btn primary" onclick="copyText('${escapeForJs(w)}')">Copy</button></div></div>`; list.appendChild(el) }) }
 
-    function copyText(t){ navigator.clipboard.writeText(t).then(()=>alert('Text copied')) }
-    function escapeForJs(s){ return s.replace(/'/g, "\\'").replace(/\n/g,'\\n') }
-    function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+    function copyText(t){ navigator.clipboard.writeText(t).then(()=>alert('Text copied')) }
+    function escapeForJs(s){ return s.replace(/'/g, "\\'").replace(/\n/g,'\\n') }
+    function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 
-    /* recipes */
-    function buildIngredients(){ const panel = $('#ingredient-panel'); panel.innerHTML=''; ingredients.forEach(ing=>{ const el = document.createElement('div'); el.className='ingredient'; el.textContent=ing; el.dataset.ing=ing; el.onclick=()=>{ el.classList.toggle('active'); renderRecipes(); } panel.appendChild(el) }) }
+    /* recipes */
+    function buildIngredients(){ const panel = $('#ingredient-panel'); panel.innerHTML=''; ingredients.forEach(ing=>{ const el = document.createElement('div'); el.className='ingredient'; el.textContent=ing; el.dataset.ing=ing; el.onclick=()=>{ el.classList.toggle('active'); renderRecipes(); } panel.appendChild(el) }) }
 
-    function renderRecipes(){ const sel = Array.from($all('.ingredient.active')).map(x=>x.dataset.ing); const list = $('#recipe-list'); list.innerHTML=''; recipes.forEach(r=>{ const needed = r.ing; const missing = needed.filter(i=>!sel.includes(i)); const el = document.createElement('div'); el.className='recipe card '+(missing.length===0? 'match-good': (missing.length<=2? 'match-miss':'')); el.innerHTML = `<strong>${r.title}</strong><div style="font-size:13px;color:var(--muted)">Needs: ${needed.join(', ')}</div><div style="margin-top:8px">${missing.length===0?'<em>You can make this ✅</em>': '<em>Missing: '+missing.join(', ')+'</em>'}</div>`; list.appendChild(el) }) }
+    function renderRecipes(){
+      const sel = Array.from($all('.ingredient.active')).map(x=>x.dataset.ing);
+      const list = $('#recipe-list'); list.innerHTML='';
+      recipes.forEach((r, index)=>{
+        const needed = r.ing;
+        const missing = needed.filter(i=>!sel.includes(i));
+        const el = document.createElement('div');
+        el.className='recipe card fade-in-up '+(missing.length===0? 'match-good': (missing.length<=2? 'match-miss':''));
+        el.style.animationDelay = `${index * 0.08}s`; // Staggered animation for recipes
+        el.innerHTML = `<strong>${r.title}</strong><div style="font-size:13px;color:var(--muted)">Needs: ${needed.join(', ')}</div><div style="margin-top:8px">${missing.length===0?'<em>You can make this ✅</em>': '<em>Missing: '+missing.join(', ')+'</em>'}</div>`;
+        list.appendChild(el)
+      })
+    }
 
-    /* discounts */
-    function renderDiscounts(){ const grid = $('#discount-grid'); grid.innerHTML=''; discounts.sort((a,b)=> (b.discount*b.price) - (a.discount*a.price)).forEach(d=>{ const el = document.createElement('div'); el.className='discount card fade-in'; el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${d.title}</strong><div style="font-size:13px;color:var(--muted)">${d.tag}</div></div><div style="text-align:right"><div class="badge">-${d.discount}%</div><div style="font-weight:700; margin-top:6px">$${(d.price*(1-d.discount/100)).toFixed(0)}</div></div></div>`; grid.appendChild(el) }) }
+    /* discounts */
+    function renderDiscounts(){
+      const grid = $('#discount-grid'); grid.innerHTML='';
+      discounts.sort((a,b)=> (b.discount*b.price) - (a.discount*a.price)).forEach((d, index)=>{
+        const el = document.createElement('div');
+        el.className='discount fade-in';
+        el.style.animationDelay = `${index * 0.07}s`; // Staggered animation for discounts
+        el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${d.title}</strong><div style="font-size:13px;color:var(--muted)">${d.tag}</div></div><div style="text-align:right"><div class="badge">-${d.discount}%</div><div style="font-weight:700; margin-top:6px">$${(d.price*(1-d.discount/100)).toFixed(0)}</div></div></div>`;
+        grid.appendChild(el)
+      })
+    }
 
-    /* nav */
-    $all('.nav-btn').forEach(b=> b.onclick = ()=>{ $all('.nav-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); showPage(b.dataset.target)} )
-    function showPage(id){ $all('.page').forEach(p=>p.classList.remove('active')); $('#'+id).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}) }
-    function goTo(id){ $all('.nav-btn').forEach(x=>{ x.classList.toggle('active', x.dataset.target===id) }); showPage(id) }
+    /* nav */
+    $all('.nav-btn').forEach(b=> b.onclick = ()=>{ $all('.nav-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); showPage(b.dataset.target)} )
+    function showPage(id){
+      $all('.page').forEach(p=>p.classList.remove('active'));
+      const targetPage = $('#'+id);
+      targetPage.classList.add('active');
+      // Re-apply fade-in to content when page changes
+      $all('#'+id+' .fade-in').forEach(el => {
+        el.classList.remove('fade-in');
+        void el.offsetWidth; // Trigger reflow
+        el.classList.add('fade-in');
+      });
+      $all('#'+id+' .fade-in-up').forEach(el => {
+        el.classList.remove('fade-in-up');
+        void el.offsetWidth; // Trigger reflow
+        el.classList.add('fade-in-up');
+      });
+      window.scrollTo({top:0,behavior:'smooth'})
+    }
+    function goTo(id){ $all('.nav-btn').forEach(x=>{ x.classList.toggle('active', x.dataset.target===id) }); showPage(id) }
 
-    /* init */
-    buildCategoryChips(); renderGifts(); buildWishes(); buildIngredients(); renderRecipes(); renderDiscounts();
-    $('#gift-search').addEventListener('input', ()=>renderGifts());
-    $('#sort-gifts').addEventListener('change', ()=>renderGifts());
+    /* init */
+    buildCategoryChips(); renderGifts(); buildWishes(); buildIngredients(); renderRecipes(); renderDiscounts();
+    $('#gift-search').addEventListener('input', ()=>renderGifts());
+    $('#sort-gifts').addEventListener('change', ()=>renderGifts());
 
-    // small enhancement: keyboard shortcut 'g' for gifts, 'r' for recipes
-    window.addEventListener('keydown', e=>{ if(e.key==='g') goTo('gifts'); if(e.key==='r') goTo('recipes') });
+    // small enhancement: keyboard shortcut 'g' for gifts, 'r' for recipes
+    window.addEventListener('keydown', e=>{ if(e.key==='g') goTo('gifts'); if(e.key==='r') goTo('recipes') });
 
-    // accessibility: announce navigation
-    function announce(msg){ const live = document.getElementById('__live')||document.createElement('div'); live.id='__live'; live.setAttribute('aria-live','polite'); live.style.position='absolute'; live.style.left='-9999px'; document.body.appendChild(live); live.textContent = msg }
-  </script>
+    // accessibility: announce navigation
+    function announce(msg){ const live = document.getElementById('__live')||document.createElement('div'); live.id='__live'; live.setAttribute('aria-live','polite'); live.style.position='absolute'; live.style.left='-9999px'; document.body.appendChild(live); live.textContent = msg }
+  </script>
 </body>
 </html>
