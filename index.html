@@ -1,444 +1,302 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎁 GiftPulse.me | Premium Christmas Hub</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter font family -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Palette: Dark theme inspired by Winter/Holiday */
-            --color-primary: #a12b32; /* Deep Ruby Red */
-            --color-secondary: #0a4d33; /* Dark Forest Green */
-            --color-accent: #fcd34d; /* Subtle Gold */
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f7f7; /* Near-white background (more contrast) */
-            scroll-behavior: smooth;
-            line-height: 1.6;
-        }
-        /* Apple-style clean headings */
-        .section-header {
-            font-weight: 700;
-            letter-spacing: -0.03em; /* Tight letter spacing for boldness */
-            color: #1f2937; /* Dark gray */
-            margin-bottom: 2rem;
-        }
-        /* Clean, subtle card shadow and hover effect */
-        .premium-card {
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
-        }
-        .premium-card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        /* Primary button style */
-        .btn-primary {
-            background-color: var(--color-primary);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .btn-primary:hover {
-            background-color: #8c2329; /* Slightly darker red */
-            transform: translateY(-1px);
-        }
-        /* Secondary action links */
-        .link-secondary {
-            color: var(--color-secondary);
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-        .link-secondary:hover {
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MerryFind — Holiday Gifts & Recipes</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#6ee7b7; --muted:#9aa4b2; --glass: rgba(255,255,255,0.04);
+      --card-radius:18px; --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --glass-border: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:linear-gradient(180deg,var(--bg),#071026 65%); color:#e6eef6; -webkit-font-smoothing:antialiased}
+    header{backdrop-filter: blur(6px); position:sticky; top:10px; z-index:40; display:flex; align-items:center; gap:16px; padding:12px 20px; margin:12px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); box-shadow:var(--shadow)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#064e3b,var(--accent)); color:#052f21;font-weight:800}
+    nav{margin-left:auto; display:flex; gap:12px}
+    nav button{background:transparent;border:none;color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer}
+    nav button.active{color:var(--accent); background:linear-gradient(90deg, rgba(110,231,183,0.06), rgba(110,231,183,0.02)); border:1px solid rgba(110,231,183,0.06)}
+    main{padding:28px; max-width:1100px; margin:24px auto}
+    .hero{display:grid; grid-template-columns:1fr 420px; gap:24px; align-items:center}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); border-radius:var(--card-radius); padding:20px; box-shadow:var(--shadow); border:1px solid var(--glass-border)}
+    h1{margin:0 0 8px 0; font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
+    .features{display:flex; gap:12px; margin-top:16px}
+    .feature{flex:1; padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02)}
+
+    /* grid for pages */
+    section.page{display:none; margin-top:18px}
+    section.page.active{display:block}
+
+    /* Gifts grid */
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    .search{flex:1}
+    input[type=text], select{width:100%; padding:10px;border-radius:10px;border:1px solid var(--glass-border); background:transparent;color:inherit}
+    .chips{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{padding:8px 10px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid rgba(255,255,255,0.02); cursor:pointer;color:var(--muted)}
+    .chip.active{border-color:var(--accent); color:var(--accent)}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .product{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border:1px solid rgba(255,255,255,0.02); display:flex; gap:12px; align-items:center}
+    .product img{width:84px;height:84px;border-radius:10px; object-fit:cover; flex-shrink:0}
+    .meta{flex:1}
+    .price{font-weight:700}
+    .affiliate{margin-top:8px; display:flex; gap:8px}
+    .btn{padding:8px 12px;border-radius:10px;border:none; cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent), #34d399); color:#032217}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04); color:var(--muted)}
+
+    /* Wishes */
+    .wish-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .wish-card{padding:14px;border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+
+    /* Recipes */
+    .ingredients{display:flex; gap:12px; flex-wrap:wrap}
+    .ingredient{padding:8px 10px;border-radius:999px;border:1px solid var(--glass-border); cursor:pointer}
+    .ingredient.active{background:rgba(110,231,183,0.08); border-color:var(--accent)}
+    .recipe-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .recipe{padding:12px;border-radius:12px}
+    .match-good{border-left:4px solid #10b981;padding-left:10px}
+    .match-miss{border-left:4px solid #f59e0b;padding-left:10px}
+
+    /* Discountable */
+    .discount-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .discount{padding:12px;border-radius:12px}
+    .badge{font-weight:700;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.03)}
+
+    /* footer */
+    footer{margin-top:28px; text-align:center; color:var(--muted); padding:20px}
+
+    /* small screens */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .grid, .discount-grid{grid-template-columns:repeat(2,1fr)}
+      .recipe-list{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* subtle entrance animation */
+    .fade-in{opacity:0; transform:translateY(8px); animation:fadeIn .6s forwards}
+    @keyframes fadeIn{to{opacity:1; transform:none}}
+  </style>
 </head>
-<body class="text-gray-800">
+<body>
+  <header class="fade-in">
+    <div class="brand">
+      <div class="logo">MF</div>
+      <div>
+        <div style="font-size:14px">MerryFind</div>
+        <div style="font-size:11px;color:var(--muted)">Holiday gifts & recipes</div>
+      </div>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-target="home">Home</button>
+      <button class="nav-btn" data-target="gifts">Gifts</button>
+      <button class="nav-btn" data-target="wishes">Wishes</button>
+      <button class="nav-btn" data-target="recipes">Recipes</button>
+      <button class="nav-btn" data-target="discounts">Discounts</button>
+    </nav>
+  </header>
 
-    <!-- Header & Navigation (Clean and Fixed) -->
-    <header class="sticky top-0 z-50 bg-white bg-opacity-95 backdrop-blur-md border-b border-gray-200">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-xl font-bold tracking-tight" style="color: var(--color-primary);">
-                <span class="mr-1 text-2xl">🎁</span> GiftPulse<span class="text-gray-400 font-normal">.me</span>
-            </a>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#gifts" class="text-gray-600 hover:text-red-700 transition duration-150">Gifts</a>
-                <a href="#ai-cards" class="text-gray-600 hover:text-red-700 transition duration-150">AI Card Studio</a>
-                <a href="#recipes" class="text-gray-600 hover:text-red-700 transition duration-150">Recipes</a>
-                <a href="#decor" class="text-gray-600 hover:text-red-700 transition duration-150">Decor</a>
-                <a href="#kids" class="text-gray-600 hover:text-red-700 transition duration-150">Family</a>
-            </nav>
-            <button id="menu-button" class="md:hidden text-gray-600 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden border-t bg-white">
-            <div class="px-5 pt-2 pb-3 space-y-1 text-center">
-                <a href="#gifts" class="block py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-lg">Gifts</a>
-                <a href="#ai-cards" class="block py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-lg">AI Card Studio</a>
-                <a href="#recipes" class="block py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-lg">Recipes</a>
-                <a href="#decor" class="block py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-lg">Decor</a>
-                <a href="#kids" class="block py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-lg">Family</a>
+  <main>
+    <section id="home" class="page active">
+      <div class="hero card">
+        <div>
+          <h1>Find perfect holiday gifts, wishes & recipes — beautifully.</h1>
+          <p class="lead">A lightweight site concept with filtering, affiliate-ready gift lists, personalized wishes, recipe matching and a discount radar. Built with clean interactions and subtle animations.</p>
+          <div class="features">
+            <div class="feature">
+              <strong>Top 20 Gifts</strong>
+              <div style="font-size:13px;color:var(--muted)">Curated & affiliate-ready — filter by categories.</div>
             </div>
+            <div class="feature">
+              <strong>Wishes & Messages</strong>
+              <div style="font-size:13px;color:var(--muted)">One-click copy messages for family & friends.</div>
+            </div>
+            <div class="feature">
+              <strong>Recipe Matcher</strong>
+              <div style="font-size:13px;color:var(--muted)">Check ingredients you have — see which recipes you can make.</div>
+            </div>
+          </div>
         </div>
-    </header>
-
-    <!-- Hero Section (Bold, High-Contrast Title) -->
-    <section id="hero" class="bg-gray-100 py-24 sm:py-32 md:py-40 border-b">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <p class="text-sm font-semibold tracking-widest uppercase mb-3" style="color: var(--color-primary);">
-                The Holiday Edit
-            </p>
-            <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tighter text-gray-900 mb-8">
-                Unwrap Simplicity. <span style="color: var(--color-secondary);">Craft Joy.</span>
-            </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
-                Your high-quality destination for curated gifts, effortless AI greetings, and timeless holiday inspiration.
-            </p>
-            <a href="#gifts" class="inline-block px-10 py-3.5 text-white font-semibold text-lg rounded-full btn-primary shadow-lg hover:shadow-xl">
-                Explore The Collections
-            </a>
+        <div>
+          <div class="card" style="text-align:center">
+            <h3 style="margin:4px 0 8px 0">Quick actions</h3>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn primary" onclick="goTo('gifts')">Browse Gifts</button>
+              <button class="btn ghost" onclick="goTo('recipes')">Try Recipe Matcher</button>
+              <button class="btn ghost" onclick="goTo('wishes')">Get Wishes</button>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Main Content Grid -->
-    <div class="max-w-6xl mx-auto px-6 py-20">
-
-        <!-- 1. Unique Gift Ideas (Affiliate Focus) -->
-        <section id="gifts" class="mb-24 pt-10">
-            <h2 class="text-4xl section-header text-center">Curated Gift Guides</h2>
-            <p class="text-center text-lg text-gray-500 mb-12 max-w-xl mx-auto">Skip the guesswork. Hand-picked items that feel meaningful and high-quality for everyone on your list.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Gift Card 1: Mom (Premium Card Style) -->
-                <div class="bg-white p-6 rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=For+Mom" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=For+Mom';" alt="Gift for Mom" class="rounded-lg mb-5 w-full h-48 object-cover object-center border border-gray-100">
-                    <h3 class="text-2xl font-semibold mb-2 tracking-tight">Gifts for the **Minimalist Mom**</h3>
-                    <p class="text-sm text-gray-500 mb-4">Timeless essentials that elevate daily routines. *High conversion links.*</p>
-                    <a href="#" class="link-secondary flex items-center">
-                        Discover & Shop
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                </div>
-                <!-- Gift Card 2: Gamer -->
-                <div class="bg-white p-6 rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=For+Gamer" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=For+Gamer';" alt="Gift for Gamer" class="rounded-lg mb-5 w-full h-48 object-cover object-center border border-gray-100">
-                    <h3 class="text-2xl font-semibold mb-2 tracking-tight">The Pro-Gamer Hardware Edit</h3>
-                    <p class="text-sm text-gray-500 mb-4">High-ticket items and must-have gear for peak performance. *Strong commissions.*</p>
-                    <a href="#" class="link-secondary flex items-center">
-                        Discover & Shop
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                </div>
-                <!-- Gift Card 3: Boyfriend -->
-                <div class="bg-white p-6 rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=For+Boyfriend" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=For+Boyfriend';" alt="Gift for Partner" class="rounded-lg mb-5 w-full h-48 object-cover object-center border border-gray-100">
-                    <h3 class="text-2xl font-semibold mb-2 tracking-tight">Experience Gifts for Him</h3>
-                    <p class="text-sm text-gray-500 mb-4">Focus on quality experiences, travel, and premium subscription services.</p>
-                    <a href="#" class="link-secondary flex items-center">
-                        Discover & Shop
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                </div>
-            </div>
-            <div class="mt-12 text-center text-xs text-gray-400">
-                GiftPulse.me is supported by affiliate links. We only recommend products we trust.
-            </div>
-        </section>
-
-        <!-- 2. AI Card Generator (Viral Focus) -->
-        <section id="ai-cards" class="mb-24 pt-10 bg-white rounded-3xl p-8 sm:p-12 md:p-16 border-4" style="border-color: var(--color-accent);">
-            <h2 class="text-4xl section-header text-center" style="color: var(--color-primary);">AI Card Studio</h2>
-            <p class="text-center text-lg text-gray-600 mb-10 max-w-2xl mx-auto">Generate a custom, witty, or heartwarming Christmas message instantly using the power of Gemini.</p>
-
-            <div class="max-w-xl mx-auto">
-                <div class="mb-6">
-                    <label for="prompt-input" class="block text-sm font-semibold mb-2">Write a card message for...</label>
-                    <textarea id="prompt-input" rows="3" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-red-500 focus:border-red-500 transition duration-150 resize-none placeholder-gray-400" placeholder="Example: A sarcastic message for my friend who still believes in Santa."></textarea>
-                </div>
-
-                <div class="flex justify-center mb-10">
-                    <button id="generate-button" class="w-full px-12 py-3.5 text-white font-semibold text-lg rounded-full btn-primary shadow-lg">
-                        <span id="button-text">Generate Message</span>
-                        <svg id="loading-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Result Display -->
-                <div id="result-box" class="mt-6 p-6 bg-gray-50 border border-gray-300 rounded-xl shadow-inner hidden">
-                    <h3 class="text-base font-semibold mb-3 text-gray-700">Your Perfect Greeting:</h3>
-                    <p id="card-output" class="text-xl italic text-gray-800 leading-relaxed">
-                        <!-- Output will be injected here -->
-                    </p>
-                    <div class="mt-4 flex justify-end">
-                        <button id="copy-button" class="text-sm font-medium link-secondary flex items-center">
-                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v10a2 2 0 002 2h2m0-12h8m-8 0L9 3m7 12h2a2 2 0 002-2V7a2 2 0 00-2-2h-2m-3 10l3-3m0 0l-3-3m3 3H8"></path></svg>
-                            Copy Message
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Notification Box -->
-                <div id="notification-box" class="fixed bottom-4 right-4 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl hidden transition-opacity duration-300 opacity-0 text-sm"></div>
-            </div>
-        </section>
-
-        <!-- 3. Christmas Recipes (SEO Focus) -->
-        <section id="recipes" class="mb-24 pt-10">
-            <h2 class="text-4xl section-header text-center">Essential Holiday Kitchen</h2>
-            <p class="text-center text-lg text-gray-500 mb-12 max-w-xl mx-auto">Classic recipes perfected, plus the kitchen gear that makes holiday cooking effortless.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Recipe Card 1 -->
-                <div class="bg-white rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=Sauce" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=Sauce';" alt="Cranberry Sauce" class="w-full h-40 object-cover border-b border-gray-100">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold mb-2">Spiced Cranberry Sauce</h3>
-                        <p class="text-sm text-gray-500 mb-3">The vibrant, zesty staple for your Christmas feast. Quick prep time.</p>
-                        <a href="#" class="link-secondary text-sm">View Recipe</a>
-                    </div>
-                </div>
-                <!-- Recipe Card 2 -->
-                <div class="bg-white rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=Cookies" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=Cookies';" alt="Gingerbread" class="w-full h-40 object-cover border-b border-gray-100">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold mb-2">No-Fail Gingerbread Chews</h3>
-                        <p class="text-sm text-gray-500 mb-3">Perfectly soft and chewy—ideal for decorating with the family.</p>
-                        <a href="#" class="link-secondary text-sm">View Recipe</a>
-                    </div>
-                </div>
-                <!-- Recipe Card 3 -->
-                <div class="bg-white rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=Cocoa" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=Cocoa';" alt="Hot Cocoa" class="w-full h-40 object-cover border-b border-gray-100">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold mb-2">Rich Peppermint Cocoa</h3>
-                        <p class="text-sm text-gray-500 mb-3">A slow-cooker method for serving a creamy, all-day warm drink.</p>
-                        <a href="#" class="link-secondary text-sm">View Recipe</a>
-                    </div>
-                </div>
-                <!-- Recipe Card 4 -->
-                <div class="bg-white rounded-xl premium-card overflow-hidden">
-                    <img src="https://placehold.co/600x400/f5f5f5/000000?text=Roast" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f5f5f5/000000?text=Roast';" alt="Christmas Roast" class="w-full h-40 object-cover border-b border-gray-100">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold mb-2">Herb-Crusted Beef Tenderloin</h3>
-                        <p class="text-sm text-gray-500 mb-3">The easiest main course to impress your holiday dinner guests.</p>
-                        <a href="#" class="link-secondary text-sm">View Recipe</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. Home Decor / DIY Ideas -->
-        <section id="decor" class="mb-24 pt-10">
-            <h2 class="text-4xl section-header text-center">Minimalist Decor & DIY</h2>
-            <p class="text-center text-lg text-gray-500 mb-12 max-w-xl mx-auto">Focus on high-impact, low-clutter solutions that feel intentional and elegant.</p>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Large Feature Card 1 -->
-                <div class="bg-gray-100 rounded-2xl p-8 flex flex-col sm:flex-row items-center premium-card">
-                    <span class="text-5xl mb-4 sm:mb-0 sm:mr-8" style="color: var(--color-secondary);">🌲</span>
-                    <div>
-                        <h3 class="text-2xl font-semibold mb-2 tracking-tight">The Perfect Tree Stand</h3>
-                        <p class="text-gray-600 mb-3">A guide to lighting and positioning your tree for maximum visual impact in any room size.</p>
-                        <a href="#" class="link-secondary">Read The Guide</a>
-                    </div>
-                </div>
-                <!-- Large Feature Card 2 -->
-                <div class="bg-gray-100 rounded-2xl p-8 flex flex-col sm:flex-row items-center premium-card">
-                    <span class="text-5xl mb-4 sm:mb-0 sm:mr-8" style="color: var(--color-accent);">🕯️</span>
-                    <div>
-                        <h3 class="text-2xl font-semibold mb-2 tracking-tight">Winter Scents: Less is More</h3>
-                        <p class="text-gray-600 mb-3">Curated candles, diffusers, and natural scents to create a luxurious home ambiance.</p>
-                        <a href="#" class="link-secondary">Shop Affiliates</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Christmas Activities for Kids / Crafts -->
-        <section id="kids" class="mb-10 pt-10 bg-white rounded-3xl p-10 shadow-lg">
-            <h2 class="text-4xl section-header text-center">Family Connection</h2>
-            <p class="text-center text-lg text-gray-500 mb-12 max-w-xl mx-auto">Meaningful, low-effort activities and printables to keep the kids engaged during the break.</p>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                <div class="text-center">
-                    <a href="#" class="block bg-gray-100 p-6 rounded-xl hover:shadow-md transition duration-200">
-                        <span class="text-4xl block mb-2">🦌</span>
-                        <p class="font-semibold text-sm">Reindeer Crafts</p>
-                    </a>
-                </div>
-                <div class="text-center">
-                    <a href="#" class="block bg-gray-100 p-6 rounded-xl hover:shadow-md transition duration-200">
-                        <span class="text-4xl block mb-2">📄</span>
-                        <p class="font-semibold text-sm">Printable Bingo</p>
-                    </a>
-                </div>
-                <div class="text-center">
-                    <a href="#" class="block bg-gray-100 p-6 rounded-xl hover:shadow-md transition duration-200">
-                        <span class="text-4xl block mb-2">🎁</span>
-                        <p class="font-semibold text-sm">DIY Gift Wrap</p>
-                    </a>
-                </div>
-                <div class="text-center">
-                    <a href="#" class="block bg-gray-100 p-6 rounded-xl hover:shadow-md transition duration-200">
-                        <span class="text-4xl block mb-2">📝</span>
-                        <p class="font-semibold text-sm">Kindness Chart</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 mt-20">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h4 class="text-2xl font-bold mb-4">GiftPulse.me</h4>
-            <div class="space-x-4 mb-4 text-sm">
-                <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="text-gray-400 hover:text-white transition">Contact</a>
-            </div>
-            <p class="text-xs text-gray-600 mt-6">
-                © 2025 GiftPulse.me. All rights reserved. **Affiliate Disclosure:** We earn commissions from qualifying purchases linked on this site.
-            </p>
+    <section id="gifts" class="page">
+      <div class="card">
+        <div class="controls">
+          <div class="search"><input type="text" id="gift-search" placeholder="Search gifts, e.g. 'headphones'" /></div>
+          <div style="width:220px"><select id="sort-gifts"><option value="popular">Sort: Popular</option><option value="price-asc">Price: Low→High</option><option value="price-desc">Price: High→Low</option></select></div>
         </div>
+        <div style="margin:12px 0" class="chips" id="gift-categories"></div>
+        <div class="grid" id="gift-grid"></div>
+      </div>
+    </section>
+
+    <section id="wishes" class="page">
+      <div class="card">
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px">
+          <div style="font-weight:700">Select recipient:</div>
+          <div class="chips" id="wish-cats"></div>
+        </div>
+        <div class="wish-list" id="wish-list"></div>
+      </div>
+    </section>
+
+    <section id="recipes" class="page">
+      <div class="card">
+        <h3>Recipe Matcher</h3>
+        <p class="lead">Tick the ingredients you have — we'll show recipes you can make or come close to.</p>
+        <div style="margin:12px 0" id="ingredient-panel" class="ingredients"></div>
+        <div style="margin-top:12px" class="recipe-list" id="recipe-list"></div>
+      </div>
+    </section>
+
+    <section id="discounts" class="page">
+      <div class="card">
+        <h3>Discountable & Valuable Finds</h3>
+        <p class="lead">Items with high value and big current discounts — good for holiday shopping.</p>
+        <div style="margin-top:12px" class="discount-grid" id="discount-grid"></div>
+      </div>
+    </section>
+
+    <footer>
+      Built with ❤️ — prototype UI. Replace affiliate placeholders with your affiliate links.
     </footer>
+  </main>
 
-    <script>
-        // === Basic UI/UX JS ===
+  <script>
+    /* ---------- Sample data ---------- */
+    const gifts = [
+      {id:1,title:'Cozy Wool Scarf',cat:'clothing',price:29, img:'https://images.unsplash.com/photo-1542060748-86f48b2c0a2b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=1',pop:90},
+      {id:2,title:'Bluetooth Headphones',cat:'electronics',price:89,img:'https://images.unsplash.com/photo-1518444024645-7f5c4c7c3f6d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=2',pop:120},
+      {id:3,title:'Hand-painted Ornament Set',cat:'decoration',price:19,img:'https://images.unsplash.com/photo-1549187774-b4e9b0445b6d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=3',pop:70},
+      {id:4,title:'Retro Game Console',cat:'gaming',price:129,img:'https://images.unsplash.com/photo-1606813903254-535a3b5c9e1d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=4',pop:110},
+      {id:5,title:'Guitar Starter Pack',cat:'music',price:149,img:'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=5',pop:95},
+      {id:6,title:'Festive Candle Trio',cat:'home',price:24,img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&q=60&w=400',aff:'https://example.com/aff?item=6',pop:65},
+      {id:7,title:'Leather Wallet',cat:'accessories',price:39,img:'https://images.unsplash.com/photo-1520975914675-6fedd9b9a1b9?auto=format&q=60&w=400',aff:'https://example.com/aff?item=7',pop:88},
+      {id:8,title:'Kids Plush Toy',cat:'toys',price:22,img:'https://images.unsplash.com/photo-1543785734-4e7a7f5b5b2b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=8',pop:140},
+      {id:9,title:'Custom Photo Frame',cat:'decoration',price:34,img:'https://images.unsplash.com/photo-1505691723518-36a94f1f0b6b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=9',pop:50},
+      {id:10,title:'Warm Winter Boots',cat:'shoes',price:99,img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&q=60&w=400',aff:'https://example.com/aff?item=10',pop:105},
+      {id:11,title:'Novel Bestseller',cat:'books',price:16,img:'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&q=60&w=400',aff:'https://example.com/aff?item=11',pop:47},
+      {id:12,title:'Coffee Gift Set',cat:'food',price:46,img:'https://images.unsplash.com/photo-1485459726513-55c8bd6f7b3b?auto=format&q=60&w=400',aff:'https://example.com/aff?item=12',pop:96},
+      {id:13,title:'Fitness Tracker',cat:'electronics',price:79,img:'https://images.unsplash.com/photo-1519861531924-1e3b1d3af5f6?auto=format&q=60&w=400',aff:'https://example.com/aff?item=13',pop:101},
+      {id:14,title:'Christmas Sweater',cat:'clothing',price:34,img:'https://images.unsplash.com/photo-1542407762-9e9f1b7b34d4?auto=format&q=60&w=400',aff:'https://example.com/aff?item=14',pop:84},
+      {id:15,title:'Cap & Beanie Combo',cat:'accessories',price:26,img:'https://images.unsplash.com/photo-1519741491850-17c3e7c8b9c1?auto=format&q=60&w=400',aff:'https://example.com/aff?item=15',pop:60},
+      {id:16,title:'Board Game Classic',cat:'gaming',price:49,img:'https://images.unsplash.com/photo-1527920341687-3a2b6ae7b3b2?auto=format&q=60&w=400',aff:'https://example.com/aff?item=16',pop:130},
+      {id:17,title:'Kitchen Mixer',cat:'home',price:199,img:'https://images.unsplash.com/photo-1541534401786-6c2b0fda6cbc?auto=format&q=60&w=400',aff:'https://example.com/aff?item=17',pop:55},
+      {id:18,title:'Smart Light Kit',cat:'electronics',price:59,img:'https://images.unsplash.com/photo-1496180727794-817822f65950?auto=format&q=60&w=400',aff:'https://example.com/aff?item=18',pop:99},
+      {id:19,title:'Scented Diffuser',cat:'home',price:33,img:'https://images.unsplash.com/photo-1496284045406-d5c76b1f0f0d?auto=format&q=60&w=400',aff:'https://example.com/aff?item=19',pop:48},
+      {id:20,title:'Stainless Travel Mug',cat:'accessories',price:21,img:'https://images.unsplash.com/photo-1517685352821-92cf88aee5a5?auto=format&q=60&w=400',aff:'https://example.com/aff?item=20',pop:76}
+    ];
 
-        // Mobile Menu Toggle
-        document.getElementById('menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+    const wishData = {
+      mom:["Mom, your love is my comfort — Merry Christmas!","Wishing you a cozy holiday filled with warm hugs and cocoa."],
+      dad:["Dad, thanks for being my rock. Merry Christmas!","May your holiday be peaceful and joyful."] ,
+      brother:["Bro — let's make this Christmas legendary!","To my brother, teammate, friend — happy holidays."] ,
+      sister:["Sis, your smile lights the season. Merry Christmas!","May your season sparkle as you do."] ,
+      friend:["So glad to have you this year — happy holidays!","Wishing you laughter, warmth and great memories."]
+    };
 
-        // Function to show transient notification box
-        function showNotification(message) {
-            const box = document.getElementById('notification-box');
-            box.innerText = message;
-            box.classList.remove('hidden', 'opacity-0');
-            box.classList.add('opacity-100');
-            setTimeout(() => {
-                box.classList.remove('opacity-100');
-                box.classList.add('opacity-0');
-                setTimeout(() => box.classList.add('hidden'), 300);
-            }, 2000);
-        }
+    const ingredients = ['flour','sugar','butter','eggs','milk','chicken','potato','cinnamon','ginger','garlic','onion','cheese','tomato','basil'];
 
-        // Copy to Clipboard Functionality
-        document.getElementById('copy-button').addEventListener('click', function() {
-            const output = document.getElementById('card-output').innerText;
-            if (output) {
-                // Use document.execCommand('copy') for better compatibility in iFrames
-                const textarea = document.createElement('textarea');
-                textarea.value = output;
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand('copy');
-                    showNotification('Message copied!');
-                } catch (err) {
-                    console.error('Could not copy text: ', err);
-                }
-                document.body.removeChild(textarea);
-            }
-        });
+    const recipes = [
+      {id:'r1',title:'Classic Gingerbread Cookies',ing:['flour','sugar','butter','eggs','cinnamon','ginger']},
+      {id:'r2',title:'Roast Chicken with Herbs',ing:['chicken','garlic','onion','butter']},
+      {id:'r3',title:'Creamy Mashed Potato',ing:['potato','butter','milk']},
+      {id:'r4',title:'Tomato Basil Pasta',ing:['tomato','basil','garlic','cheese']},
+      {id:'r5',title:'Christmas Custard',ing:['milk','eggs','sugar']}
+    ];
 
-        // === AI Card Generator Logic (Gemini API Integration) ===
+    const discounts = [
+      {id:4, title:'Retro Game Console', price:129, discount:25, tag:'gaming'},
+      {id:17, title:'Kitchen Mixer', price:199, discount:30, tag:'home'},
+      {id:2, title:'Bluetooth Headphones', price:89, discount:15, tag:'electronics'},
+      {id:10, title:'Warm Winter Boots', price:99, discount:40, tag:'clothing'},
+      {id:5, title:'Guitar Starter Pack', price:149, discount:20, tag:'music'},
+      {id:16, title:'Board Game Classic', price:49, discount:10, tag:'gaming'}
+    ];
 
-        const generateButton = document.getElementById('generate-button');
-        const promptInput = document.getElementById('prompt-input');
-        const cardOutput = document.getElementById('card-output');
-        const resultBox = document.getElementById('result-box');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const buttonText = document.getElementById('button-text');
+    /* ---------- UI wiring ---------- */
+    const categories = Array.from(new Set(gifts.map(g=>g.cat)));
 
-        // Credentials & Config (Leave apiKey as empty string for platform to inject)
-        const apiKey = ""; 
-        const modelName = 'gemini-2.5-flash-preview-09-2025';
+    function $(s){return document.querySelector(s)}
+    function $all(s){return Array.from(document.querySelectorAll(s))}
 
-        // Exponential backoff retry logic
-        async function fetchWithRetry(url, options, maxRetries = 5) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response;
-                } catch (error) {
-                    if (i < maxRetries - 1) {
-                        const delay = Math.pow(2, i) * 1000;
-                        console.warn(`Request failed. Retrying in ${delay / 1000}s...`);
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                    } else {
-                        throw error;
-                    }
-                }
-            }
-        }
+    function buildCategoryChips(){
+      const wrap = $('#gift-categories'); wrap.innerHTML='';
+      ['all', ...categories].forEach(c=>{
+        const but = document.createElement('div'); but.className='chip'+(c==='all'?' active':''); but.textContent=c; but.dataset.cat=c; but.onclick=()=>{ $all('.chip').forEach(x=>x.classList.remove('active')); but.classList.add('active'); renderGifts(); }
+        wrap.appendChild(but);
+      })
+    }
 
-        /**
-         * Calls the Gemini API to generate a personalized Christmas card message.
-         */
-        async function generateCardMessage() {
-            const userPrompt = promptInput.value.trim();
-            if (!userPrompt) {
-                showNotification('Please enter a prompt for your card message!');
-                return;
-            }
+    function renderGifts(){
+      const grid = $('#gift-grid'); grid.innerHTML='';
+      const q = $('#gift-search').value.toLowerCase();
+      const activeCat = $all('#gift-categories .chip').find(c=>c.classList.contains('active')).dataset.cat;
+      let list = gifts.filter(g=> (activeCat==='all' || g.cat===activeCat) && (g.title.toLowerCase().includes(q) || g.cat.includes(q)) );
+      const sort = $('#sort-gifts').value;
+      if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);
+      if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);
+      if(sort==='popular') list.sort((a,b)=>b.pop-b.pop);
+      list.forEach(item=>{
+        const el = document.createElement('div'); el.className='product fade-in';
+        el.innerHTML = `<img src="${item.img}" alt="${item.title}"><div class="meta"><div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${item.title}</strong><div style="font-size:12px;color:var(--muted)">Category: ${item.cat}</div></div><div style="text-align:right"><div class="price">$${item.price}</div><div style="font-size:12px;color:var(--muted)">pop ${item.pop}</div></div></div><div class="affiliate"><a class="btn primary" href="${item.aff}" target="_blank" rel="noopener">Buy (affiliate)</a><button class="btn ghost" onclick="copyLink('${item.aff}')">Copy Link</button></div></div>`;
+        grid.appendChild(el);
+      })
+    }
 
-            // UI State: Loading
-            generateButton.disabled = true;
-            buttonText.textContent = 'Generating...';
-            loadingSpinner.classList.remove('hidden');
-            resultBox.classList.add('hidden');
-            cardOutput.textContent = ''; // Clear previous output
+    function copyLink(url){navigator.clipboard.writeText(url).then(()=>alert('Affiliate link copied to clipboard'))}
 
-            const systemPrompt = `You are a professional Christmas Card writer. Based on the user's prompt, write a concise, creative, and personalized holiday message (3-5 sentences maximum). Use sophisticated, heartwarming, or witty language. Do not use introductory or closing remarks, only the message itself. Focus on a warm, witty, or specific tone as requested.`;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+    function buildWishes(){
+      const wrap = $('#wish-cats'); wrap.innerHTML='';
+      Object.keys(wishData).forEach(k=>{ const c = document.createElement('div'); c.className='chip'+(k==='mom'?' active':''); c.textContent=k; c.onclick=()=>{ $all('#wish-cats .chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); renderWishes(k) }; wrap.appendChild(c)})
+      renderWishes('mom');
+    }
 
-            const payload = {
-                contents: [{ parts: [{ text: userPrompt }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
+    function renderWishes(key){ const list = $('#wish-list'); list.innerHTML=''; wishData[key].forEach(w=>{ const el = document.createElement('div'); el.className='wish-card fade-in'; el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><strong>${capitalize(key)}</strong><p style="color:var(--muted)">${w}</p></div><div><button class="btn primary" onclick="copyText('${escapeForJs(w)}')">Copy</button></div></div>`; list.appendChild(el) }) }
 
-            try {
-                const response = await fetchWithRetry(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+    function copyText(t){ navigator.clipboard.writeText(t).then(()=>alert('Text copied')) }
+    function escapeForJs(s){ return s.replace(/'/g, "\\'").replace(/\n/g,'\\n') }
+    function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 
-                const result = await response.json();
-                // Extract generated text from the response
-                const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, the North Pole server is busy. Try a different prompt!";
-                
-                cardOutput.textContent = generatedText;
+    /* recipes */
+    function buildIngredients(){ const panel = $('#ingredient-panel'); panel.innerHTML=''; ingredients.forEach(ing=>{ const el = document.createElement('div'); el.className='ingredient'; el.textContent=ing; el.dataset.ing=ing; el.onclick=()=>{ el.classList.toggle('active'); renderRecipes(); } panel.appendChild(el) }) }
 
-            } catch (error) {
-                console.error("Gemini API Error:", error);
-                cardOutput.textContent = "Oops! An error occurred while contacting the studio. Please try generating your message again in a moment.";
+    function renderRecipes(){ const sel = Array.from($all('.ingredient.active')).map(x=>x.dataset.ing); const list = $('#recipe-list'); list.innerHTML=''; recipes.forEach(r=>{ const needed = r.ing; const missing = needed.filter(i=>!sel.includes(i)); const el = document.createElement('div'); el.className='recipe card '+(missing.length===0? 'match-good': (missing.length<=2? 'match-miss':'')); el.innerHTML = `<strong>${r.title}</strong><div style="font-size:13px;color:var(--muted)">Needs: ${needed.join(', ')}</div><div style="margin-top:8px">${missing.length===0?'<em>You can make this ✅</em>': '<em>Missing: '+missing.join(', ')+'</em>'}</div>`; list.appendChild(el) }) }
 
-            } finally {
-                // UI State: Done
-                generateButton.disabled = false;
-                buttonText.textContent = 'Generate Message';
-                loadingSpinner.classList.add('hidden');
-                resultBox.classList.remove('hidden');
-            }
-        }
+    /* discounts */
+    function renderDiscounts(){ const grid = $('#discount-grid'); grid.innerHTML=''; discounts.sort((a,b)=> (b.discount*b.price) - (a.discount*a.price)).forEach(d=>{ const el = document.createElement('div'); el.className='discount card fade-in'; el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${d.title}</strong><div style="font-size:13px;color:var(--muted)">${d.tag}</div></div><div style="text-align:right"><div class="badge">-${d.discount}%</div><div style="font-weight:700; margin-top:6px">$${(d.price*(1-d.discount/100)).toFixed(0)}</div></div></div>`; grid.appendChild(el) }) }
 
-        generateButton.addEventListener('click', generateCardMessage);
-    </script>
+    /* nav */
+    $all('.nav-btn').forEach(b=> b.onclick = ()=>{ $all('.nav-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); showPage(b.dataset.target)} )
+    function showPage(id){ $all('.page').forEach(p=>p.classList.remove('active')); $('#'+id).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}) }
+    function goTo(id){ $all('.nav-btn').forEach(x=>{ x.classList.toggle('active', x.dataset.target===id) }); showPage(id) }
+
+    /* init */
+    buildCategoryChips(); renderGifts(); buildWishes(); buildIngredients(); renderRecipes(); renderDiscounts();
+    $('#gift-search').addEventListener('input', ()=>renderGifts());
+    $('#sort-gifts').addEventListener('change', ()=>renderGifts());
+
+    // small enhancement: keyboard shortcut 'g' for gifts, 'r' for recipes
+    window.addEventListener('keydown', e=>{ if(e.key==='g') goTo('gifts'); if(e.key==='r') goTo('recipes') });
+
+    // accessibility: announce navigation
+    function announce(msg){ const live = document.getElementById('__live')||document.createElement('div'); live.id='__live'; live.setAttribute('aria-live','polite'); live.style.position='absolute'; live.style.left='-9999px'; document.body.appendChild(live); live.textContent = msg }
+  </script>
 </body>
 </html>
