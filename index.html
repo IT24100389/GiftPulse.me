@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Christmas Hub - Inspired by Apple Design</title>
-    <!-- Favicon / Tab Icon added here (White sparkle on deep red background) -->
     <link rel="icon" type="image/png" href="https://placehold.co/32x32/c0392b/ffffff?text=%E2%9C%A8">
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
@@ -115,22 +112,16 @@
 </head>
 <body class="antialiased">
 
-    <!-- BUBBLE BACKGROUND CONTAINER -->
     <div id="bubble-wrapper"></div>
-    <!-- END BUBBLE BACKGROUND CONTAINER -->
-
-    <!-- Navigation Bar -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo/Title -->
                 <div class="flex items-center">
                     <span class="text-2xl font-black tracking-tighter text-gray-900 flex items-center">
                         <i data-lucide="sparkles" class="w-6 h-6 mr-2 text-[var(--primary)]"></i>
                         Christmas Hub
                     </span>
                 </div>
-                <!-- Desktop Navigation Links -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <button onclick="navigate('home')" class="nav-link text-sm font-medium hover:text-[var(--primary)] transition-colors active-link" data-page="home">
@@ -150,7 +141,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors">
                         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -159,7 +149,6 @@
             </div>
         </nav>
 
-        <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
                 <button onclick="navigate('home')" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 active-mobile-link" data-page="home">Home</button>
@@ -171,12 +160,9 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
     <main id="content-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <!-- Content will be injected here by JavaScript -->
-    </main>
+        </main>
 
-    <!-- Footer -->
     <footer class="mt-20 border-t border-gray-200 bg-white">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
             <p>&copy; 2024 Christmas Hub. All rights reserved. | Inspired by clean, fresh design.</p>
@@ -268,7 +254,7 @@
             { id: 58, recipient: 'Brother', wish: "Dearest Brother, thank you for everything. May your holiday be merry and adventurous." },
             { id: 59, recipient: 'Brother', wish: "Brother, you're family and friend. Wishing you a Christmas of excitement and warmth." },
             { id: 60, recipient: 'Brother', wish: "To the coolest Brother: May this Christmas bring you joy, fun, and epic memories." },
-            { id: 61, recipient: 'Brother', wish: "Brother, your humor shines. Wishing you a warm holiday with games and laughter." },
+            { id: 61, recipient: 'Brother', wish: "Brother, your humor lights up our lives. Wishing you a warm holiday with games and laughter." },
             { id: 62, recipient: 'Brother', wish: "Thank you, Brother, for being you. May your Christmas be as fun and kind as you." },
             { id: 63, recipient: 'Brother', wish: "Brother, you're my ally. Wishing you a holiday full of happiness and adventures." },
             { id: 64, recipient: 'Brother', wish: "To Brother, who shares it all: May this Christmas shower you with joy and fun." },
@@ -295,7 +281,7 @@
             { id: 83, recipient: 'Sister', wish: "Sister, you're my rock. Wishing you a holiday full of happiness and magic." },
             { id: 84, recipient: 'Sister', wish: "To Sister, who shares dreams: May this Christmas shower you with love and peace." },
             { id: 85, recipient: 'Sister', wish: "Sister, your love endures. Wishing you a merry Christmas with warmth." },
-            { id: 86, recipient: 'Sister', wish: "Dearest Sister, thanks for it all. May your Christmas be magical and joyful." },
+            { id: 86, recipient: 'Sister', wish: "Dearest Sister, thanks for it all. May your Christmas be magical and bright." },
         
             // New wishes for Friend
             { id: 87, recipient: 'Friend', wish: "Friend, you're like family. Wishing you a Christmas full of joy, laughs, and great company." },
@@ -544,7 +530,6 @@
                 ${renderSectionTitle('Welcome to the Ultimate Christmas Hub.', 'Discover curated gifts, heartfelt wishes, holiday recipes, and the best deals of the season.')}
 
                 <div class="grid md:grid-cols-2 gap-8 mt-12">
-                    <!-- Feature 1: Gifting -->
                     <div class="apple-card p-6 md:p-10 rounded-3xl text-left bg-gradient-to-br from-white to-red-50">
                         <i data-lucide="gift" class="w-8 h-8 text-[var(--primary)] mb-4"></i>
                         <h3 class="text-2xl font-semibold mb-2">Curated Gift Market</h3>
@@ -553,7 +538,6 @@
                             Explore Gifts <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
                         </a>
                     </div>
-                    <!-- Feature 2: Recipes -->
                     <div class="apple-card p-6 md:p-10 rounded-3xl text-left bg-gradient-to-br from-white to-green-50">
                         <i data-lucide="utensils" class="w-8 h-8 text-[var(--secondary)] mb-4"></i>
                         <h3 class="text-2xl font-semibold mb-2">The Christmas Kitchen</h3>
@@ -601,8 +585,7 @@
             </div>
 
             <div id="gift-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Gift cards will be injected here -->
-            </div>
+                </div>
             <div class="text-center mt-12 text-gray-500">
                 <p>Showing 8 of 20+ Gifts. Affiliate links help support this site.</p>
             </div>
@@ -668,8 +651,7 @@
                 </div>
 
                 <div id="wish-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Wish cards will be injected here -->
-                </div>
+                    </div>
             `;
         };
 
@@ -725,7 +707,7 @@
 
         const renderRecipeCard = (recipe) => `
             <div class="apple-card p-6 rounded-xl flex flex-col h-full hover:scale-[1.02] bg-white">
-                <h3 class="text-xl font-bold text-gray-900 mb-2">${recipe.name}</h3>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">${recipe.recipeName}</h3>
                 <p class="text-sm text-gray-600 mb-4">${recipe.quickSummary}</p>
                 <div class="mb-4">
                     <span class="font-semibold text-gray-700">Key Ingredients:</span>
@@ -746,7 +728,7 @@
                     ${allIngredients.map(ing => `
                         <div class="flex items-center">
                             <input type="checkbox" id="ing-${ing.toLowerCase()}" name="ingredient" value="${ing}" ${selectedIngredients.includes(ing) ? 'checked' : ''}
-                                class="h-4 w-4 text-[var(--primary)] border-gray-300 rounded focus:ring-2 focus:ring-[var(--primary)] ingredient-checkbox"
+                                class="h-4 w-4 text-[var(--primary)] border-gray-300 rounded focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] ingredient-checkbox"
                             >
                             <label for="ing-${ing.toLowerCase()}" class="ml-2 text-sm font-medium text-gray-700 cursor-pointer select-none">${ing}</label>
                         </div>
@@ -775,16 +757,12 @@
                     <p id="recipe-placeholder" class="col-span-full text-center text-gray-500 p-8 border border-dashed rounded-xl">
                         Search for a dish or check ingredients above to find your perfect Christmas recipe!
                     </p>
-                    <!-- Recipes will be injected here -->
-                </div>
+                    </div>
                 <div id="recipe-sources" class="mt-8 text-sm text-gray-500 hidden">
                     <p class="font-semibold">Sources:</p>
-                    <!-- Sources will be injected here -->
-                </div>
+                    </div>
             </div>
         `;
-
-            // Inside the <script type="module"> block
 
     const fetchRecipes = async (queryType) => {
     // CRITICAL: Get elements inside the function to ensure they are available after rendering
@@ -837,7 +815,7 @@
                 recipes = mockRecipes.filter(r => selectedIngredients.every(ing => r.mainIngredients.includes(ing.toLowerCase())));
             } else if (queryType === 'search') {
                 const searchQ = searchInput.value.trim().toLowerCase();
-                recipes = mockRecipes.filter(r => r.name.toLowerCase().includes(searchQ) || r.quickSummary.toLowerCase().includes(searchQ));
+                recipes = mockRecipes.filter(r => r.recipeName.toLowerCase().includes(searchQ) || r.quickSummary.toLowerCase().includes(searchQ));
             }
 
         // Shuffle and take up to 5 for display (or remove limit for all)
@@ -860,60 +838,44 @@
         }
     };
 
-// ... (initRecipeListeners remains the same as the previous response)
+    const initRecipeListeners = () => {
+        const list = document.getElementById('recipe-list');
+        // Clear list and show placeholder on init (only on the first render, or reset)
+        // Since renderRecipesPage already handles list clearing, we just re-establish the placeholder state.
+        list.innerHTML = '';
+        document.getElementById('recipe-placeholder').style.display = 'block';
 
-        // Inside the <script type="module"> block
+        // --- CRUCIAL STEP: Re-attach button listeners after DOM is updated ---
 
-        const initRecipeListeners = () => {
-            const list = document.getElementById('recipe-list');
-            list.innerHTML = '';
-            document.getElementById('recipe-placeholder').style.display = 'block';
+        // Event listener for 'Find Recipes' button
+        document.getElementById('find-recipe-btn').addEventListener('click', () => fetchRecipes('ingredients'));
 
-    // --- CRUCIAL STEP: Re-attach button listeners after DOM is updated ---
+        // Event listener for 'Search' button
+        document.getElementById('search-recipe-btn').addEventListener('click', () => fetchRecipes('search'));
 
-    // Event listener for 'Find Recipes' button
-            document.getElementById('find-recipe-btn').addEventListener('click', () => fetchRecipes('ingredients'));
-
-    // Event listener for 'Search' button
-            document.getElementById('search-recipe-btn').addEventListener('click', () => fetchRecipes('search'));
-
-    // -------------------------------------------------------------------
+        // -------------------------------------------------------------------
     
-    // Event listener for ingredient checkboxes
-            document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', (e) => {
-                    const value = e.target.value;
-                    if (e.target.checked) {
-                        if (!selectedIngredients.includes(value)) {
-                            selectedIngredients.push(value);
-                        }
-                    } else {
-                        selectedIngredients = selectedIngredients.filter(ing => ing !== value);
+        // Event listener for ingredient checkboxes
+        document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const value = e.target.value;
+                if (e.target.checked) {
+                    if (!selectedIngredients.includes(value)) {
+                        selectedIngredients.push(value);
                     }
-                });
-            });
-
-    // Pre-check any previously selected ingredients
-            document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
-                if (selectedIngredients.includes(checkbox.value)) {
-                    checkbox.checked = true;
-                 }
-            });
-        };
-
-            // Event listener for 'Find Recipes' button
-            document.getElementById('find-recipe-btn').addEventListener('click', () => fetchRecipes('ingredients'));
-
-            // Event listener for 'Search' button
-            document.getElementById('search-recipe-btn').addEventListener('click', () => fetchRecipes('search'));
-
-            // Pre-check any previously selected ingredients
-            document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
-                if (selectedIngredients.includes(checkbox.value)) {
-                    checkbox.checked = true;
+                } else {
+                    selectedIngredients = selectedIngredients.filter(ing => ing !== value);
                 }
             });
-        };
+        });
+
+        // Pre-check any previously selected ingredients
+        document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
+            if (selectedIngredients.includes(checkbox.value)) {
+                checkbox.checked = true;
+            }
+        });
+    };
 
 
         // --- DISCOUNTS PAGE LOGIC AND TEMPLATE ---
@@ -952,8 +914,7 @@
                 </div>
 
                 <div id="discount-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Discount items will be injected here -->
-                </div>
+                    </div>
                 <div class="text-center mt-12 text-gray-500">
                     <p>Prices and discounts are indicative and subject to change by retailers.</p>
                 </div>
