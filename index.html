@@ -171,8 +171,8 @@
 
 
     <script type="module">
-        // --- GEMINI API Configuration ---
-        const apiKey = ""; // API Key will be handled by the execution environment
+        // --- GEMINI API Configuration (API Key is handled by execution environment) ---
+        const apiKey = ""; 
         const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
         // --- MOCK DATA (For Gifts, Wishes, Discounts) ---
@@ -195,7 +195,7 @@
             { id: 5, recipient: 'Friend', wish: "Happy Holidays! Thanks for being the best friend a person could ask for. Hope your day is filled with laughter and good company. Cheers to the new year!" },
             { id: 6, recipient: 'Grandparents', wish: "To my wonderful grandparents, thank you for the stories and the warmth. May your holiday be cozy and bright." },
         
-            // New wishes for Mom
+            // Additional wishes for variety...
             { id: 7, recipient: 'Mom', wish: "Mom, your endless love makes every Christmas magical. Wishing you a season filled with peace, warmth, and the joy you've always given us." },
             { id: 8, recipient: 'Mom', wish: "To the heart of our family, Mom: May this Christmas bring you relaxation, beautiful moments, and all the happiness you deserve." },
             { id: 9, recipient: 'Mom', wish: "Mom, thank you for making holidays special. Wishing you a Christmas overflowing with love, laughter, and cherished memories." },
@@ -357,7 +357,7 @@
             { recipeName: 'Egg Puffs', mainIngredients: ['eggs', 'cheese', 'flour', 'milk', 'butter'], quickSummary: 'Cheesy egg muffins for breakfast.' },
             { recipeName: 'Salted Caramel Cookies', mainIngredients: ['flour', 'sugar', 'butter', 'eggs', 'vanilla', 'chocolate'], quickSummary: 'Butter cookies with chocolate and vanilla.' },
             { recipeName: 'Orange Snow Balls', mainIngredients: ['flour', 'sugar', 'butter', 'eggs', 'vanilla'], quickSummary: 'Vanilla cookies rolled in sugar (adapt with cinnamon).' },
-            { recipeName: 'Classic Christmas Cake', mainIngredients: ['flour', 'sugar', 'butter', 'eggs', 'cranberries', 'wine', 'nuts'], quickSummary: 'Fruit cake fed with wine for moisture.' },
+            { recipeName: 'Classic Christmas Cake', mainIngredients: ['flour', 'sugar', 'butter', 'eggs', 'cranberries', 'wine', 'nuts', 'cinnamon'], quickSummary: 'Fruit cake fed with wine for moisture.' },
             { recipeName: 'Classic Christmas Pudding', mainIngredients: ['flour', 'sugar', 'butter', 'eggs', 'milk', 'cranberries', 'wine', 'nuts'], quickSummary: 'Steamed fruity pudding for dessert.' },
             { recipeName: 'Unbelievably Easy Mince Pies', mainIngredients: ['flour', 'butter', 'sugar', 'eggs', 'cranberries', 'wine', 'nuts'], quickSummary: 'Crumbly pies filled with cranberry-nut mince.' },
             { recipeName: 'Easy Turkey Crown', mainIngredients: ['turkey', 'butter', 'sugar', 'wine'], quickSummary: 'Glazed turkey roast with wine reduction.' },
@@ -386,12 +386,14 @@
             { recipeName: 'Cinnamon Vanilla Cake', mainIngredients: ['flour', 'sugar', 'butter', 'eggs', 'milk', 'cinnamon', 'vanilla'], quickSummary: 'Spiced cake for dessert.' },
             { recipeName: 'Wine-Poached Cranberries', mainIngredients: ['wine', 'cranberries', 'sugar'], quickSummary: 'Cranberries simmered in wine for sauce.' }
         ];
+        // Note: These values must be capitalized because they are used directly as checkbox labels
         const allIngredients = ['Bacon', 'Butter', 'Cheese', 'Chocolate', 'Cinnamon', 'Cranberries', 'Eggs', 'Flour', 'Ginger', 'Milk', 'Nuts', 'Potatoes', 'Sugar', 'Turkey', 'Vanilla', 'Wine'];
 
         let currentPage = 'home';
         let activeGiftFilter = 'All';
         let activeWishFilter = 'All';
         let activeDiscountFilter = 'All';
+        // selectedIngredients must store the lowercase versions for correct matching
         let selectedIngredients = [];
 
         // --- BUBBLE GENERATION LOGIC ---
@@ -812,6 +814,7 @@
         try {
             let recipes = mockRecipes;
             if (queryType === 'ingredients') {
+                // This filtering is correct because selectedIngredients now contains lowercase values
                 recipes = mockRecipes.filter(r => selectedIngredients.every(ing => r.mainIngredients.includes(ing.toLowerCase())));
             } else if (queryType === 'search') {
                 const searchQ = searchInput.value.trim().toLowerCase();
@@ -840,8 +843,6 @@
 
     const initRecipeListeners = () => {
         const list = document.getElementById('recipe-list');
-        // Clear list and show placeholder on init (only on the first render, or reset)
-        // Since renderRecipesPage already handles list clearing, we just re-establish the placeholder state.
         list.innerHTML = '';
         document.getElementById('recipe-placeholder').style.display = 'block';
 
@@ -858,7 +859,9 @@
         // Event listener for ingredient checkboxes
         document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', (e) => {
-                const value = e.target.value;
+                // *** CRITICAL FIX APPLIED HERE: Store lowercase value ***
+                const value = e.target.value.toLowerCase(); 
+
                 if (e.target.checked) {
                     if (!selectedIngredients.includes(value)) {
                         selectedIngredients.push(value);
@@ -871,7 +874,8 @@
 
         // Pre-check any previously selected ingredients
         document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
-            if (selectedIngredients.includes(checkbox.value)) {
+            // *** CRITICAL FIX APPLIED HERE: Check the lowercase version ***
+            if (selectedIngredients.includes(checkbox.value.toLowerCase())) {
                 checkbox.checked = true;
             }
         });
