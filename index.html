@@ -85,6 +85,33 @@
             }
         }
     </style>
+    <style>
+    /* Add these styles to the <style> tag in the <head> */
+    .gift-image-container {
+        position: relative;
+        height: 10rem; /* Matches h-40 */
+        overflow: hidden;
+    }
+    .gift-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.5rem; /* rounded-lg */
+        transition: opacity 0.3s ease-in-out;
+    }
+    .gift-image-hover {
+        opacity: 0;
+    }
+    .apple-card:hover .gift-image-hover {
+        opacity: 1;
+    }
+    .apple-card:hover .gift-image-default {
+        opacity: 0;
+    }
+</style>
 </head>
 <body class="antialiased">
 
@@ -165,14 +192,14 @@
         // --- MOCK DATA (For Gifts, Wishes, Discounts) ---
         const giftCategories = ['Shoes', 'Decorations', 'Cards', 'Shirts', 'Caps', 'Tech', 'Books', 'Jewelry', 'Experience'];
         const mockGifts = [
-            { id: 1, name: 'The New Silent Headphones', category: 'Tech', price: '$499', description: 'Ultimate noise cancellation and spatial audio.', link: 'https://affiliate.link/tech1', image: 'https://placehold.co/400x300/e0e0e0/333?text=Headphones' },
-            { id: 2, name: 'Cozy Wool Cardigan', category: 'Shirts', price: '$129', description: 'Luxurious cashmere blend for winter warmth.', link: 'https://affiliate.link/shirt1', image: 'https://placehold.co/400x300/d5e6e6/333?text=Sweater' },
-            { id: 3, name: 'Minimalist Wreath', category: 'Decorations', price: '$85', description: 'Handcrafted steel and LED light wreath.', link: 'https://affiliate.link/decor1', image: 'https://placehold.co/400x300/c7a7a7/333?text=Wreath' },
-            { id: 4, name: 'Premium Leather Boots', category: 'Shoes', price: '$220', description: 'Waterproof and stylish for any winter journey.', link: 'https://affiliate.link/shoe1', image: 'https://placehold.co/400x300/a3c4f3/333?text=Boots' },
-            { id: 5, name: 'Personalized Greeting Set', category: 'Cards', price: '$35', description: 'A set of 10 engraved holiday cards.', link: 'https://affiliate.link/card1', image: 'https://placehold.co/400x300/e9d5ff/333?text=Cards' },
-            { id: 6, name: 'VR Fitness Bundle', category: 'Gaming', price: '$349', description: 'A new way to get active and entertained.', link: 'https://affiliate.link/gaming1', image: 'https://placehold.co/400x300/b3c5e8/333?text=VR+Kit' },
-            { id: 7, name: 'Crystal Decanter Set', category: 'Home', price: '$150', description: 'Elegant glassware for the holiday dinner table.', link: 'https://affiliate.link/home1', image: 'https://placehold.co/400x300/d1e7c5/333?text=Decanter' },
-            { id: 8, name: 'Adventure Backpack', category: 'Bags', price: '$95', description: 'Durable and spacious for travel and hikes.', link: 'https://affiliate.link/bag1', image: 'https://placehold.co/400x300/f3e8c5/333?text=Backpack' },
+            { id: 1, name: 'The New Silent Headphones', category: 'Tech', price: '$499', description: 'Ultimate noise cancellation and spatial audio.', link: 'https://affiliate.link/tech1', image: 'https://placehold.co/400x300/e0e0e0/333?text=Headphones', hoverImage: 'https://placehold.co/400x300/d0d0d0/222?text=Headphones+Hover' },
+            { id: 2, name: 'Cozy Wool Cardigan', category: 'Shirts', price: '$129', description: 'Luxurious cashmere blend for winter warmth.', link: 'https://affiliate.link/shirt1', image: 'https://placehold.co/400x300/d5e6e6/333?text=Sweater', hoverImage: 'https://placehold.co/400x300/c5d6d6/222?text=Sweater+Hover' },
+            { id: 3, name: 'Minimalist Wreath', category: 'Decorations', price: '$85', description: 'Handcrafted steel and LED light wreath.', link: 'https://affiliate.link/decor1', image: 'https://placehold.co/400x300/c7a7a7/333?text=Wreath', hoverImage: 'https://placehold.co/400x300/b79797/222?text=Wreath+Hover' },
+            { id: 4, name: 'Premium Leather Boots', category: 'Shoes', price: '$220', description: 'Waterproof and stylish for any winter journey.', link: 'https://affiliate.link/shoe1', image: 'https://placehold.co/400x300/a3c4f3/333?text=Boots', hoverImage: 'https://placehold.co/400x300/93b4e3/222?text=Boots+Hover' },
+            { id: 5, name: 'Personalized Greeting Set', category: 'Cards', price: '$35', description: 'A set of 10 engraved holiday cards.', link: 'https://affiliate.link/card1', image: 'https://placehold.co/400x300/e9d5ff/333?text=Cards', hoverImage: 'https://placehold.co/400x300/d9c5ef/222?text=Cards+Hover' },
+            { id: 6, name: 'VR Fitness Bundle', category: 'Gaming', price: '$349', description: 'A new way to get active and entertained.', link: 'https://affiliate.link/gaming1', image: 'https://placehold.co/400x300/b3c5e8/333?text=VR+Kit', hoverImage: 'https://placehold.co/400x300/a3b5d8/222?text=VR+Kit+Hover' },
+            { id: 7, name: 'Crystal Decanter Set', category: 'Home', price: '$150', description: 'Elegant glassware for the holiday dinner table.', link: 'https://affiliate.link/home1', image: 'https://placehold.co/400x300/d1e7c5/333?text=Decanter', hoverImage: 'https://placehold.co/400x300/c1d7b5/222?text=Decanter+Hover' },
+            { id: 8, name: 'Adventure Backpack', category: 'Bags', price: '$95', description: 'Durable and spacious for travel and hikes.', link: 'https://affiliate.link/bag1', image: 'https://placehold.co/400x300/f3e8c5/333?text=Backpack', hoverImage: 'https://placehold.co/400x300/e3d8b5/222?text=Backpack+Hover' },
         ];
         const mockWishes = [
             { id: 1, recipient: 'Mom', wish: "To the woman who gave me everything: May your Christmas be filled with the same joy and endless light you bring to my life. I love you." },
@@ -495,7 +522,10 @@
 
         const renderGiftCard = (gift) => `
             <div class="apple-card p-4 rounded-xl flex flex-col h-full hover:scale-[1.02]">
-                <img src="${gift.image}" alt="${gift.name}" class="rounded-lg mb-4 object-cover w-full h-40">
+                <div class="gift-image-container mb-4">
+                    <img src="${gift.image}" alt="${gift.name}" class="gift-image gift-image-default">
+                    <img src="${gift.hoverImage}" alt="${gift.name} (hover)" class="gift-image gift-image-hover">
+                </div>
                 <div class="flex-grow">
                     <span class="text-xs font-medium text-gray-500 uppercase">${gift.category}</span>
                     <h3 class="text-xl font-semibold text-gray-900 mt-1 mb-2">${gift.name}</h3>
@@ -509,7 +539,6 @@
                 </div>
             </div>
         `;
-
         const renderGiftsPage = () => `
             ${renderSectionTitle('The Ultimate Gift Guide', 'Top 20 curated Christmas gifts with affiliate links, filterable by category.')}
 
