@@ -794,9 +794,21 @@
         
             list.innerHTML = '';
             sourcesDiv.classList.add('hidden');
+
+            if (queryType === 'ingredients' && selectedIngredients.length === 0) {
+                showSystemMessage('Please select at least one ingredient.', true);
+                return; // EXIT early
+            }
+            if (queryType === 'search') {
+                const searchQ = searchInput.value.trim().toLowerCase();
+                if (!searchQ) {
+                    showSystemMessage('Please enter a search term for the recipe.', true);
+                    return; // EXIT early
+                }
+            }
         
             // Show loading state
-            const loadingHtml = `<div class="col-span-full text-center p-8 flex flex-col items-center justify-center">
+           const loadingHtml = `<div class="col-span-full text-center p-8 flex flex-col items-center justify-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)] mb-4"></div>
                 <p class="text-gray-600">Loading recipes...</p>
             </div>`;
@@ -832,24 +844,36 @@
                     list.innerHTML = `<p class="col-span-full text-center text-gray-500 p-8">No recipes found for your selection.</p>`;
                 }
                 sourcesDiv.classList.add('hidden'); // No sources for mock
-            } catch (error) {
+           } catch (error) {
                 list.innerHTML = `<p class="col-span-full text-center text-red-500 p-8">An error occurred while fetching recipes.</p>`;
-            } finally {
-                // Restore button state
-                findBtn.disabled = false;
-                searchBtn.disabled = false;
-                findBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Find Recipes';
-                searchBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Search';
-                lucide.createIcons(); // Re-render icons after state change
-            }
-        };
+           } finally {
+        // Restore button state
+               findBtn.disabled = false;
+               searchBtn.disabled = false;
+               findBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Find Recipes';
+               searchBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Search';
+               lucide.createIcons(); // Re-render icons after state change
+           }
+       };
+
+        // Inside the <script type="module"> block
 
         const initRecipeListeners = () => {
             const list = document.getElementById('recipe-list');
             list.innerHTML = '';
             document.getElementById('recipe-placeholder').style.display = 'block';
 
-            // Event listener for ingredient checkboxes
+    // --- CRUCIAL STEP: Re-attach button listeners after DOM is updated ---
+
+    // Event listener for 'Find Recipes' button
+            document.getElementById('find-recipe-btn').addEventListener('click', () => fetchRecipes('ingredients'));
+
+    // Event listener for 'Search' button
+            document.getElementById('search-recipe-btn').addEventListener('click', () => fetchRecipes('search'));
+
+    // -------------------------------------------------------------------
+    
+    // Event listener for ingredient checkboxes
             document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', (e) => {
                     const value = e.target.value;
@@ -862,6 +886,14 @@
                     }
                 });
             });
+
+    // Pre-check any previously selected ingredients
+            document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
+                if (selectedIngredients.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                 }
+            });
+        };
 
             // Event listener for 'Find Recipes' button
             document.getElementById('find-recipe-btn').addEventListener('click', () => fetchRecipes('ingredients'));
