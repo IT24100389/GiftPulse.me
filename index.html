@@ -811,69 +811,74 @@
             </div>
         `;
 
-        const fetchRecipes = async (queryType) => {
-    const list = document.getElementById('recipe-list');
-    const placeholder = document.getElementById('recipe-placeholder');
-    const findBtn = document.getElementById('find-recipe-btn');
-    const searchBtn = document.getElementById('search-recipe-btn');
-    const sourcesDiv = document.getElementById('recipe-sources');
-    const searchInput = document.getElementById('recipe-search-input');
+        
+        const fetchRecipes = async (queryType) => {
+    const list = document.getElementById('recipe-list');
+    const placeholder = document.getElementById('recipe-placeholder');
+    const findBtn = document.getElementById('find-recipe-btn');
+    const searchBtn = document.getElementById('search-recipe-btn');
+    const sourcesDiv = document.getElementById('recipe-sources');
+    const searchInput = document.getElementById('recipe-search-input');
 
-    list.innerHTML = '';
-    sourcesDiv.classList.add('hidden');
-    placeholder.style.display = 'none';
+    list.innerHTML = '';
+    sourcesDiv.classList.add('hidden');
+    placeholder.style.display = 'none';
 
-    // Show loading state
-    list.innerHTML = `<div class="col-span-full text-center p-8 flex flex-col items-center justify-center">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)] mb-4"></div>
-        <p class="text-gray-600">Loading recipes...</p>
-    </div>`;
+    // Show loading state
+    list.innerHTML = `<div class="col-span-full text-center p-8 flex flex-col items-center justify-center">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)] mb-4"></div>
+        <p class="text-gray-600">Loading recipes...</p>
+    </div>`;
 
-    findBtn.disabled = true;
-    searchBtn.disabled = true;
-    findBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
-    searchBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
+    findBtn.disabled = true;
+    searchBtn.disabled = true;
+    findBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
+    searchBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>';
 
-    try {
-        let recipes = [];
-        if (queryType === 'ingredients') {
-            if (selectedIngredients.length === 0) {
-                showSystemMessage('Please select at least one ingredient.', true);
-                return;
-            }
-            recipes = mockRecipes.filter(r =>
-                selectedIngredients.every(ing =>
-                    r.mainIngredients.includes(ing.toLowerCase())
-                )
-            );
-        } else if (queryType === 'search') {
-            const searchQ = searchInput.value.trim().toLowerCase();
-            if (!searchQ) {
-                showSystemMessage('Please enter a search term for the recipe.', true);
-                return;
-            }
-            recipes = mockRecipes.filter(r =>
-                r.name.toLowerCase().includes(searchQ) ||
-                r.quickSummary.toLowerCase().includes(searchQ)
-            );
-        }
+    try {
+        let recipes = [];
+        if (queryType === 'ingredients') {
+            if (selectedIngredients.length === 0) {
+                showSystemMessage('Please select at least one ingredient.', true);
+                list.innerHTML = '';
+                placeholder.style.display = 'block';
+                return;
+            }
+            recipes = mockRecipes.filter(r =>
+                selectedIngredients.every(ing =>
+                    r.mainIngredients.map(i => i.toLowerCase()).includes(ing.toLowerCase())
+                )
+            );
+        } else if (queryType === 'search') {
+            const searchQ = searchInput.value.trim().toLowerCase();
+            if (!searchQ) {
+                showSystemMessage('Please enter a search term for the recipe.', true);
+                list.innerHTML = '';
+                placeholder.style.display = 'block';
+                return;
+            }
+            recipes = mockRecipes.filter(r =>
+                r.name.toLowerCase().includes(searchQ) ||
+                r.quickSummary.toLowerCase().includes(searchQ)
+            );
+        }
 
-        if (recipes.length === 0) {
-            list.innerHTML = `<p class="col-span-full text-center text-gray-500 p-8">No recipes found for your selection.</p>`;
-        } else {
-            list.innerHTML = recipes.map(renderRecipeCard).join('');
-        }
+        if (recipes.length === 0) {
+            list.innerHTML = `<p class="col-span-full text-center text-gray-500 p-8">No recipes found for your selection. Try different ingredients or search terms!</p>`;
+        } else {
+            list.innerHTML = recipes.map(renderRecipeCard).join('');
+        }
 
-    } catch (error) {
-        list.innerHTML = `<p class="col-span-full text-center text-red-500 p-8">An error occurred while fetching recipes.</p>`;
-        console.error(error);
-    } finally {
-        findBtn.disabled = false;
-        searchBtn.disabled = false;
-        findBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Find Recipes';
-        searchBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Search';
-        lucide.createIcons();
-    }
+    } catch (error) {
+        list.innerHTML = `<p class="col-span-full text-center text-red-500 p-8">An error occurred while fetching recipes.</p>`;
+        console.error(error);
+    } finally {
+        findBtn.disabled = false;
+        searchBtn.disabled = false;
+        findBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Find Recipes';
+        searchBtn.innerHTML = '<i data-lucide="search" class="w-5 h-5 mr-2"></i> Search';
+        lucide.createIcons();
+    }
 };
 
 
