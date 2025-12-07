@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GiftPulse - Inspired by Apple Design</title>
-        <link rel="icon" type="image/png" href="https://placehold.co/32x32/c0392b/ffffff?text=%E2%9C%A8">
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Favicon / Tab Icon added here (White sparkle on deep red background) -->
+    <link rel="icon" type="image/png" href="https://placehold.co/32x32/c0392b/ffffff?text=%E2%9C%A8">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -112,17 +115,23 @@
 </head>
 <body class="antialiased">
 
-        <div id="bubble-wrapper"></div>
-            <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+    <!-- BUBBLE BACKGROUND CONTAINER -->
+    <div id="bubble-wrapper"></div>
+    <!-- END BUBBLE BACKGROUND CONTAINER -->
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                                <div class="flex items-center">
+                <!-- Logo/Title -->
+                <div class="flex items-center">
                     <span class="text-2xl font-black tracking-tighter text-gray-900 flex items-center">
                         <i data-lucide="sparkles" class="w-6 h-6 mr-2 text-[var(--primary)]"></i>
                         Christmas Hub
                     </span>
                 </div>
-                                <div class="hidden md:block">
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <button onclick="navigate('home')" class="nav-link text-sm font-medium hover:text-[var(--primary)] transition-colors active-link" data-page="home">
                             Home
@@ -141,7 +150,8 @@
                         </button>
                     </div>
                 </div>
-                                <div class="md:hidden">
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
                     <button id="mobile-menu-button" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
@@ -149,7 +159,8 @@
             </div>
         </nav>
 
-                <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
                 <button onclick="navigate('home')" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 active-mobile-link" data-page="home">Home</button>
                 <button onclick="navigate('gifts')" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50" data-page="gifts">Gifts</button>
@@ -160,10 +171,13 @@
         </div>
     </header>
 
-        <main id="content-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            </main>
+    <!-- Main Content Area -->
+    <main id="content-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Content will be injected here by JavaScript -->
+    </main>
 
-        <footer class="mt-20 border-t border-gray-200 bg-white">
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-gray-200 bg-white">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
             <p>&copy; 2024 Christmas Hub. All rights reserved. | Inspired by clean, fresh design.</p>
         </div>
@@ -177,13 +191,8 @@
 
         // --- MOCK DATA (For Gifts, Wishes, Discounts) ---
         const giftCategories = ['Shoes', 'Decorations', 'Cards', 'Shirts', 'Caps', 'Tech', 'Books', 'Jewelry', 'Experience'];
-        
-// ************************************************************
-// *** CRITICAL FIXES APPLIED TO mockGifts ARRAY STRUCTURE: ***
-// *** 1. Removed extra array wrapper ([ at start, ] at end).***
-// *** 2. Removed erroneous semicolon after closing bracket. ***
-// ************************************************************
         const mockGifts = [
+           [
     { id: 1, name: 'The New Silent Headphones', category: 'Tech', price: '$499', description: 'Ultimate noise cancellation and spatial audio.', link: 'https://affiliate.link/tech1', image: 'https://placehold.co/400x300/e0e0e0/333?text=Headphones', hoverImage: 'https://placehold.co/400x300/d0d0d0/222?text=Headphones+Hover' },
     { id: 2, name: 'Cozy Wool Cardigan', category: 'Shirts', price: '$129', description: 'Luxurious cashmere blend for winter warmth.', link: 'https://affiliate.link/shirt1', image: 'https://placehold.co/400x300/d5e6e6/333?text=Sweater', hoverImage: 'https://placehold.co/400x300/c5d6d6/222?text=Sweater+Hover' },
     
@@ -196,7 +205,8 @@
     // Wreath 3
     { id: 5, name: 'Christmas Wreath Sign', category: 'Decorations', price: '$95', description: '2D Flat, Winter Christmas Wooden Sign Relief Effect of Ice and Snow Town Christmas Wreath Sign for Front Door Wall Hanging Decor', link: 'https://s.click.aliexpress.com/e/_c2ujHmLJ', image: 'images/wreath3_3.jpg', hoverImage: 'images/wreath3_1.jpeg' },
     // Wreath 4
-    { id: 6, name: 'Vintage Autumn Pumpkin & Lantern Wall Decor ', category: 'Decorations', price: '$75', description: '1pc Vintage Autumn Pumpkin & Lantern Wall Decor - 7.8-Inch Large Metal Wreath with Hanging Loop, Rustic Farmhouse Lanterns in Wa', link: ' https://s.click.aliexpress.com/e/_c3GLGvZP', image: 'images/wreath4_4.jpg', hoverImage: 'images/wreath4_1.jpg' },
+    { id: 6, name: 'Vintage Autumn Pumpkin & Lantern Wall Decor ', category: 'Decorations', price: '$75', description: '1pc Vintage Autumn Pumpkin & Lantern Wall Decor - 7.8-Inch Large Metal Wreath with Hanging Loop, Rustic Farmhouse Lanterns in Wa
+', link: ' https://s.click.aliexpress.com/e/_c3GLGvZP', image: 'images/wreath4_4.jpg', hoverImage: 'images/wreath4_1.jpg' },
     // Wreath 5
     { id: 7, name: 'Festive Christmas Wreath Plaque', category: 'Decorations', price: '$110', description: '2D Flat, 1pc Festive Christmas Wreath Plaque - 2D Flat Aluminum Wall Decor with Snowmen, Pine Cones, and Red Berries, Perfect', link: 'https://s.click.aliexpress.com/e/_c3v9QGcv', image: 'images/wreath5_5.jpg', hoverImage: 'images/wreath5_1.jpeg' },
     // Wreath 6
@@ -216,9 +226,7 @@
     { id: 17, name: 'VR Fitness Bundle', category: 'Gaming', price: '$349', description: 'A new way to get active and entertained.', link: 'https://affiliate.link/gaming1', image: 'https://placehold.co/400x300/b3c5e8/333?text=VR+Kit', hoverImage: 'https://placehold.co/400x300/a3b5d8/222?text=VR+Kit+Hover' },
     { id: 18, name: 'Crystal Decanter Set', category: 'Home', price: '$150', description: 'Elegant glassware for the holiday dinner table.', link: 'https://affiliate.link/home1', image: 'https://placehold.co/400x300/d1e7c5/333?text=Decanter', hoverImage: 'https://placehold.co/400x300/c1d7b5/222?text=Decanter+Hover' },
     { id: 19, name: 'Adventure Backpack', category: 'Bags', price: '$95', description: 'Durable and spacious for travel and hikes.', link: 'https://affiliate.link/bag1', image: 'https://placehold.co/400x300/f3e8c5/333?text=Backpack', hoverImage: 'https://placehold.co/400x300/e3d8b5/222?text=Backpack+Hover' },
-] // <-- This is the corrected end of the mockGifts array.
-// The extra semicolon that caused the Uncaught SyntaxError has been removed.
-
+]
         const mockWishes = [
             { id: 1, recipient: 'Mom', wish: "To the woman who gave me everything: May your Christmas be filled with the same joy and endless light you bring to my life. I love you." },
             { id: 2, recipient: 'Dad', wish: "Wishing the best role model a Christmas filled with peace, quiet, and great food. Thanks for always teaching me how to be strong." },
@@ -565,7 +573,8 @@
                 ${renderSectionTitle('Welcome to the Ultimate Christmas Hub.', 'Discover curated gifts, heartfelt wishes, holiday recipes, and the best deals of the season.')}
 
                 <div class="grid md:grid-cols-2 gap-8 mt-12">
-                                        <div class="apple-card p-6 md:p-10 rounded-3xl text-left bg-gradient-to-br from-white to-red-50">
+                    <!-- Feature 1: Gifting -->
+                    <div class="apple-card p-6 md:p-10 rounded-3xl text-left bg-gradient-to-br from-white to-red-50">
                         <i data-lucide="gift" class="w-8 h-8 text-[var(--primary)] mb-4"></i>
                         <h3 class="text-2xl font-semibold mb-2">Curated Gift Market</h3>
                         <p class="text-gray-600 mb-4">Browse our top 20 affiliate picks, categorized by shoes, tech, decor, and more. Find the perfect present easily.</p>
@@ -573,7 +582,8 @@
                             Explore Gifts <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
                         </a>
                     </div>
-                                        <div class="apple-card p-6 md:p-10 rounded-3xl text-left bg-gradient-to-br from-white to-green-50">
+                    <!-- Feature 2: Recipes -->
+                    <div class="apple-card p-6 md:p-10 rounded-3xl text-left bg-gradient-to-br from-white to-green-50">
                         <i data-lucide="utensils" class="w-8 h-8 text-[var(--secondary)] mb-4"></i>
                         <h3 class="text-2xl font-semibold mb-2">The Christmas Kitchen</h3>
                         <p class="text-gray-600 mb-4">Search for recipes based on ingredients you already have, powered by real-time Google Search data.</p>
@@ -620,7 +630,8 @@
             </div>
 
             <div id="gift-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            </div>
+                <!-- Gift cards will be injected here -->
+            </div>
             <div class="text-center mt-12 text-gray-500">
                 <p>Showing 8 of 20+ Gifts. Affiliate links help support this site.</p>
             </div>
@@ -686,7 +697,8 @@
                 </div>
 
                 <div id="wish-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    </div>
+                    <!-- Wish cards will be injected here -->
+                </div>
             `;
         };
 
@@ -795,10 +807,12 @@
                     <p id="recipe-placeholder" class="col-span-full text-center text-gray-500 p-8 border border-dashed rounded-xl">
                         Search for a dish or check ingredients above to find your perfect Christmas recipe!
                     </p>
-                                    </div>
+                    <!-- Recipes will be injected here -->
+                </div>
                 <div id="recipe-sources" class="mt-8 text-sm text-gray-500 hidden">
                     <p class="font-semibold">Sources:</p>
-                                    </div>
+                    <!-- Sources will be injected here -->
+                </div>
             </div>
         `;
 
@@ -936,10 +950,11 @@
                             ${cat}
                         </button>
                     `).join('')}
-            </div>
+                </div>
 
-            <div id="discount-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                                    </div>
+                <div id="discount-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Discount items will be injected here -->
+                </div>
                 <div class="text-center mt-12 text-gray-500">
                     <p>Prices and discounts are indicative and subject to change by retailers.</p>
                 </div>
